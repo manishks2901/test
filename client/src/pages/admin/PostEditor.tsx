@@ -451,9 +451,7 @@ export default function PostEditor() {
                                 <div className="flex items-center gap-3">
                                   <ObjectUploader
                                     onUpload={async (file) => {
-                                      const uploadRes = await apiRequest("/api/objects/upload", {
-                                        method: "POST",
-                                      });
+                                      const uploadRes = await apiRequest("POST", "/api/objects/upload");
                                       const { uploadURL } = await uploadRes.json();
                                       
                                       await fetch(uploadURL, {
@@ -464,15 +462,9 @@ export default function PostEditor() {
                                         },
                                       });
                                       
-                                      const imageURL = new URL(uploadURL).pathname;
+                                      const imageURL = uploadURL.split('?')[0];
                                       
-                                      const aclRes = await apiRequest("/api/featured-images", {
-                                        method: "PUT",
-                                        headers: {
-                                          "Content-Type": "application/json",
-                                        },
-                                        body: JSON.stringify({ imageURL }),
-                                      });
+                                      const aclRes = await apiRequest("PUT", "/api/featured-images", { imageURL });
                                       const { objectPath } = await aclRes.json();
                                       
                                       return objectPath;
