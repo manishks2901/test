@@ -107,6 +107,7 @@ export const teamMembers = pgTable("team_members", {
   id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
   name: varchar("name", { length: 255 }).notNull(),
   title: varchar("title", { length: 255 }).notNull(),
+  specialization: varchar("specialization", { length: 255 }),
   bio: text("bio"),
   email: varchar("email", { length: 255 }),
   phone: varchar("phone", { length: 50 }),
