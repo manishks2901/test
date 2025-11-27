@@ -30,7 +30,7 @@ export default function Insights() {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
   const { data: posts, isLoading: postsLoading } = useQuery<PostWithAuthor[]>({
-    queryKey: ["/api/posts", { published: true }],
+    queryKey: ["/api/posts?published=true"],
   });
 
   const { data: categories } = useQuery<Category[]>({
