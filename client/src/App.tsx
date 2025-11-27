@@ -21,6 +21,8 @@ import PostEditor from "@/pages/admin/PostEditor";
 import Categories from "@/pages/admin/Categories";
 import Messages from "@/pages/admin/Messages";
 import TeamAdmin from "@/pages/admin/TeamAdmin";
+import Analytics from "@/pages/admin/Analytics";
+import Subscribers from "@/pages/admin/Subscribers";
 
 function ProtectedRoute({ component: Component }: { component: React.ComponentType }) {
   const { isAuthenticated, isLoading } = useAuth();
@@ -74,6 +76,12 @@ function Router() {
       </Route>
       <Route path="/admin/team">
         {() => <ProtectedRoute component={TeamAdmin} />}
+      </Route>
+      <Route path="/admin/analytics">
+        {() => <ProtectedRoute component={Analytics} />}
+      </Route>
+      <Route path="/admin/subscribers">
+        {() => <ProtectedRoute component={Subscribers} />}
       </Route>
       
       <Route component={NotFound} />

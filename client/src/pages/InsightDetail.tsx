@@ -1,5 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { useRoute, Link } from "wouter";
+import { useEffect, useRef } from "react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -8,6 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import { Calendar, Clock, ArrowLeft, ArrowRight, BookOpen } from "lucide-react";
+import { apiRequest } from "@/lib/queryClient";
 import type { Post, Category } from "@shared/schema";
 
 type PostWithRelations = Post & {
@@ -18,11 +20,25 @@ type PostWithRelations = Post & {
 export default function InsightDetail() {
   const [, params] = useRoute("/insights/:slug");
   const slug = params?.slug;
+  const viewRecorded = useRef(false);
 
   const { data: post, isLoading } = useQuery<PostWithRelations>({
     queryKey: ["/api/posts", slug],
     enabled: !!slug,
   });
+
+  const recordViewMutation = useMutation({
+    mutationFn: async (postId: number) => {
+      return apiRequest("POST", `/api/posts/${postId}/view`);
+    },
+  });
+
+  useEffect(() => {
+    if (post && post.id && !viewRecorded.current) {
+      viewRecorded.current = true;
+      recordViewMutation.mutate(post.id);
+    }
+  }, [post]);
 
   const { data: relatedPosts } = useQuery<PostWithRelations[]>({
     queryKey: ["/api/posts", { published: true, limit: 3 }],

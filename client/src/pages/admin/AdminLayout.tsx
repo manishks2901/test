@@ -26,6 +26,8 @@ import {
   Users,
   LogOut,
   ExternalLink,
+  BarChart3,
+  Mail,
 } from "lucide-react";
 
 const menuItems = [
@@ -33,6 +35,11 @@ const menuItems = [
     title: "Dashboard",
     url: "/admin",
     icon: LayoutDashboard,
+  },
+  {
+    title: "Analytics",
+    url: "/admin/analytics",
+    icon: BarChart3,
   },
   {
     title: "Blog Posts",
@@ -48,6 +55,11 @@ const menuItems = [
     title: "Contact Messages",
     url: "/admin/messages",
     icon: MessageSquare,
+  },
+  {
+    title: "Subscribers",
+    url: "/admin/subscribers",
+    icon: Mail,
   },
   {
     title: "Team Members",

@@ -1,6 +1,7 @@
 import { Link } from "wouter";
 import { Scale, MapPin, Phone, Mail, Linkedin, Twitter } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { NewsletterSignup } from "./NewsletterSignup";
 
 const practiceAreas = [
   "Corporate Law",
@@ -123,6 +124,18 @@ export function Footer() {
                 </a>
               </li>
             </ul>
+          </div>
+        </div>
+
+        <div className="mt-12 pt-8 border-t border-primary-foreground/10">
+          <div className="max-w-md">
+            <h4 className="font-serif text-lg font-semibold mb-2">
+              Subscribe to Our Newsletter
+            </h4>
+            <p className="text-sm text-primary-foreground/70 mb-4">
+              Stay informed with our latest legal insights and firm updates.
+            </p>
+            <NewsletterSignup />
           </div>
         </div>
       </div>

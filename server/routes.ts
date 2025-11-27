@@ -304,4 +304,89 @@ export async function registerRoutes(server: Server, app: Express): Promise<void
       res.status(500).json({ message: "Failed to delete team member" });
     }
   });
+
+  // Analytics routes
+  app.post("/api/posts/:id/view", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const userAgent = req.headers["user-agent"];
+      const referrer = req.headers["referer"] || req.headers["referrer"];
+      await storage.recordPostView(id, userAgent as string, referrer as string);
+      res.status(201).json({ success: true });
+    } catch (error) {
+      console.error("Error recording post view:", error);
+      res.status(500).json({ message: "Failed to record view" });
+    }
+  });
+
+  app.get("/api/analytics", isAuthenticated, async (_req, res) => {
+    try {
+      const summary = await storage.getAnalyticsSummary();
+      res.json(summary);
+    } catch (error) {
+      console.error("Error fetching analytics:", error);
+      res.status(500).json({ message: "Failed to fetch analytics" });
+    }
+  });
+
+  app.get("/api/analytics/posts", isAuthenticated, async (req, res) => {
+    try {
+      const days = req.query.days ? parseInt(req.query.days as string) : undefined;
+      const stats = await storage.getPostViewStats(days);
+      res.json(stats);
+    } catch (error) {
+      console.error("Error fetching post stats:", error);
+      res.status(500).json({ message: "Failed to fetch post stats" });
+    }
+  });
+
+  // Newsletter routes
+  app.get("/api/newsletter", isAuthenticated, async (_req, res) => {
+    try {
+      const subscribers = await storage.getNewsletterSubscribers();
+      res.json(subscribers);
+    } catch (error) {
+      console.error("Error fetching subscribers:", error);
+      res.status(500).json({ message: "Failed to fetch subscribers" });
+    }
+  });
+
+  app.post("/api/newsletter/subscribe", async (req, res) => {
+    try {
+      const { email, firstName } = req.body;
+      if (!email) {
+        return res.status(400).json({ message: "Email is required" });
+      }
+      const subscriber = await storage.subscribeNewsletter({ email, firstName });
+      res.status(201).json(subscriber);
+    } catch (error) {
+      console.error("Error subscribing:", error);
+      res.status(500).json({ message: "Failed to subscribe" });
+    }
+  });
+
+  app.post("/api/newsletter/:id/unsubscribe", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const subscriber = await storage.unsubscribeNewsletter(id);
+      if (!subscriber) {
+        return res.status(404).json({ message: "Subscriber not found" });
+      }
+      res.json(subscriber);
+    } catch (error) {
+      console.error("Error unsubscribing:", error);
+      res.status(500).json({ message: "Failed to unsubscribe" });
+    }
+  });
+
+  app.delete("/api/newsletter/:id", isAuthenticated, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      await storage.deleteNewsletterSubscriber(id);
+      res.status(204).send();
+    } catch (error) {
+      console.error("Error deleting subscriber:", error);
+      res.status(500).json({ message: "Failed to delete subscriber" });
+    }
+  });
 }
