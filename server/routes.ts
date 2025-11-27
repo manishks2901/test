@@ -9,6 +9,15 @@ import {
   insertTeamMemberSchema,
 } from "@shared/schema";
 import { z } from "zod";
+import { ObjectStorageService, ObjectNotFoundError } from "./objectStorage";
+
+function extractObjectIdFromNormalizedPath(normalizedPath: string): string | null {
+  const match = normalizedPath.match(/^\/objects\/uploads\/([a-f0-9-]+)/i);
+  if (match) {
+    return match[1];
+  }
+  return null;
+}
 
 export async function registerRoutes(server: Server, app: Express): Promise<void> {
   // Auth middleware
@@ -387,6 +396,129 @@ export async function registerRoutes(server: Server, app: Express): Promise<void
     } catch (error) {
       console.error("Error deleting subscriber:", error);
       res.status(500).json({ message: "Failed to delete subscriber" });
+    }
+  });
+
+  // Object Storage routes for image uploads
+  app.get("/public-objects/:filePath(*)", async (req, res) => {
+    const filePath = req.params.filePath;
+    const objectStorageService = new ObjectStorageService();
+    try {
+      const file = await objectStorageService.searchPublicObject(filePath);
+      if (!file) {
+        return res.status(404).json({ error: "File not found" });
+      }
+      objectStorageService.downloadObject(file, res);
+    } catch (error) {
+      console.error("Error searching for public object:", error);
+      return res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  app.get("/objects/:objectPath(*)", async (req: any, res) => {
+    const objectStorageService = new ObjectStorageService();
+    try {
+      const objectFile = await objectStorageService.getObjectEntityFile(req.path);
+      
+      const userId = req.user?.claims?.sub;
+      const canAccess = await objectStorageService.canAccessObjectEntity({
+        userId,
+        objectFile,
+      });
+      
+      if (!canAccess) {
+        return res.status(403).json({ error: "Access denied" });
+      }
+      
+      objectStorageService.downloadObject(objectFile, res);
+    } catch (error) {
+      console.error("Error serving object:", error);
+      if (error instanceof ObjectNotFoundError) {
+        return res.sendStatus(404);
+      }
+      return res.sendStatus(500);
+    }
+  });
+
+  app.post("/api/objects/upload", isAuthenticated, async (req: any, res) => {
+    const objectStorageService = new ObjectStorageService();
+    try {
+      const { uploadURL, objectId } = await objectStorageService.getObjectEntityUploadURL();
+      
+      const userId = req.user?.claims?.sub;
+      if (objectId && userId) {
+        await storage.cleanExpiredPendingUploads();
+        const expiresAt = new Date(Date.now() + 60 * 60 * 1000);
+        await storage.createPendingUpload(objectId, userId, expiresAt);
+      }
+      
+      res.json({ uploadURL });
+    } catch (error) {
+      console.error("Error getting upload URL:", error);
+      res.status(500).json({ error: "Failed to get upload URL" });
+    }
+  });
+
+  app.put("/api/featured-images", isAuthenticated, async (req: any, res) => {
+    if (!req.body.imageURL) {
+      return res.status(400).json({ error: "imageURL is required" });
+    }
+    const userId = req.user?.claims?.sub;
+    const imageURL = req.body.imageURL;
+    
+    try {
+      const objectStorageService = new ObjectStorageService();
+      const normalizedPath = objectStorageService.normalizeObjectEntityPath(imageURL);
+      
+      if (!normalizedPath.startsWith("/objects/uploads/")) {
+        return res.status(400).json({ error: "Invalid image path - must be from uploads directory" });
+      }
+      
+      const objectId = extractObjectIdFromNormalizedPath(normalizedPath);
+      if (!objectId) {
+        return res.status(400).json({ error: "Invalid image path format" });
+      }
+      
+      const pendingUpload = await storage.getPendingUpload(objectId);
+      
+      const objectFile = await objectStorageService.getObjectEntityFile(normalizedPath);
+      const existingAcl = await objectStorageService.getObjectAclPolicy(objectFile);
+      
+      if (!existingAcl) {
+        if (!pendingUpload) {
+          return res.status(403).json({ error: "Access denied - upload not registered" });
+        }
+        if (pendingUpload.ownerId !== userId) {
+          return res.status(403).json({ error: "Access denied - you don't own this upload" });
+        }
+        if (new Date(pendingUpload.expiresAt) < new Date()) {
+          return res.status(403).json({ error: "Upload expired - please upload again" });
+        }
+      } else {
+        if (existingAcl.owner !== userId) {
+          return res.status(403).json({ error: "Access denied - you don't have permission to modify this object" });
+        }
+      }
+      
+      const objectPath = await objectStorageService.trySetObjectEntityAclPolicy(
+        imageURL,
+        {
+          owner: userId,
+          visibility: "public",
+        },
+      );
+      
+      if (pendingUpload) {
+        await storage.deletePendingUpload(objectId);
+      }
+      
+      res.status(200).json({ objectPath });
+    } catch (error) {
+      console.error("Error setting featured image:", error);
+      if (error instanceof ObjectNotFoundError) {
+        return res.status(404).json({ error: "Image not found" });
+      }
+      res.status(500).json({ error: "Internal server error" });
     }
   });
 

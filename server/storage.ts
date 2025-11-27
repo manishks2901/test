@@ -6,6 +6,7 @@ import {
   teamMembers,
   postViews,
   newsletterSubscribers,
+  pendingUploads,
   type User,
   type UpsertUser,
   type Post,
@@ -19,6 +20,7 @@ import {
   type PostView,
   type NewsletterSubscriber,
   type InsertNewsletterSubscriber,
+  type PendingUpload,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, and, count, sql, gte } from "drizzle-orm";
@@ -76,6 +78,12 @@ export interface IStorage {
   subscribeNewsletter(subscriber: InsertNewsletterSubscriber): Promise<NewsletterSubscriber>;
   unsubscribeNewsletter(id: number): Promise<NewsletterSubscriber | undefined>;
   deleteNewsletterSubscriber(id: number): Promise<boolean>;
+  
+  // Pending upload operations for object storage security
+  createPendingUpload(objectId: string, ownerId: string, expiresAt: Date): Promise<PendingUpload>;
+  getPendingUpload(objectId: string): Promise<PendingUpload | undefined>;
+  deletePendingUpload(objectId: string): Promise<boolean>;
+  cleanExpiredPendingUploads(): Promise<number>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -392,6 +400,35 @@ export class DatabaseStorage implements IStorage {
   async deleteNewsletterSubscriber(id: number): Promise<boolean> {
     await db.delete(newsletterSubscribers).where(eq(newsletterSubscribers.id, id));
     return true;
+  }
+
+  // Pending upload operations for object storage security
+  async createPendingUpload(objectId: string, ownerId: string, expiresAt: Date): Promise<PendingUpload> {
+    const [upload] = await db
+      .insert(pendingUploads)
+      .values({ objectId, ownerId, expiresAt })
+      .onConflictDoUpdate({
+        target: pendingUploads.objectId,
+        set: { ownerId, expiresAt },
+      })
+      .returning();
+    return upload;
+  }
+
+  async getPendingUpload(objectId: string): Promise<PendingUpload | undefined> {
+    const [upload] = await db.select().from(pendingUploads).where(eq(pendingUploads.objectId, objectId));
+    return upload;
+  }
+
+  async deletePendingUpload(objectId: string): Promise<boolean> {
+    await db.delete(pendingUploads).where(eq(pendingUploads.objectId, objectId));
+    return true;
+  }
+
+  async cleanExpiredPendingUploads(): Promise<number> {
+    const now = new Date();
+    const result = await db.delete(pendingUploads).where(sql`${pendingUploads.expiresAt} < ${now}`);
+    return 0;
   }
 }
 

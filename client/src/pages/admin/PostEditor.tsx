@@ -30,8 +30,9 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { isUnauthorizedError } from "@/lib/authUtils";
-import { ArrowLeft, Save, Eye, ImageIcon } from "lucide-react";
+import { ArrowLeft, Save, Eye, ImageIcon, Upload, X } from "lucide-react";
 import type { Post, Category } from "@shared/schema";
+import { ObjectUploader } from "@/components/ObjectUploader";
 
 const postSchema = z.object({
   title: z.string().min(1, "Title is required"),
@@ -416,37 +417,88 @@ export default function PostEditor() {
                       name="featuredImage"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Featured Image URL</FormLabel>
+                          <FormLabel>Featured Image</FormLabel>
                           <FormControl>
-                            <Input
-                              placeholder="https://example.com/image.jpg"
-                              {...field}
-                              data-testid="input-featured-image"
-                            />
+                            <div className="space-y-3">
+                              {field.value ? (
+                                <div className="relative rounded-lg overflow-hidden border border-border">
+                                  <img
+                                    src={field.value.startsWith('/objects/') 
+                                      ? field.value 
+                                      : field.value}
+                                    alt="Featured image preview"
+                                    className="w-full h-32 object-cover"
+                                    onError={(e) => {
+                                      (e.target as HTMLImageElement).style.display = 'none';
+                                    }}
+                                    onLoad={(e) => {
+                                      (e.target as HTMLImageElement).style.display = 'block';
+                                    }}
+                                    data-testid="img-featured-preview"
+                                  />
+                                  <Button
+                                    type="button"
+                                    size="icon"
+                                    variant="destructive"
+                                    className="absolute top-2 right-2 h-8 w-8"
+                                    onClick={() => field.onChange("")}
+                                    data-testid="button-remove-image"
+                                  >
+                                    <X className="h-4 w-4" />
+                                  </Button>
+                                </div>
+                              ) : (
+                                <div className="flex items-center gap-3">
+                                  <ObjectUploader
+                                    onUpload={async (file) => {
+                                      const uploadRes = await apiRequest("/api/objects/upload", {
+                                        method: "POST",
+                                      });
+                                      const { uploadURL } = await uploadRes.json();
+                                      
+                                      await fetch(uploadURL, {
+                                        method: "PUT",
+                                        body: file,
+                                        headers: {
+                                          "Content-Type": file.type,
+                                        },
+                                      });
+                                      
+                                      const imageURL = new URL(uploadURL).pathname;
+                                      
+                                      const aclRes = await apiRequest("/api/featured-images", {
+                                        method: "PUT",
+                                        headers: {
+                                          "Content-Type": "application/json",
+                                        },
+                                        body: JSON.stringify({ imageURL }),
+                                      });
+                                      const { objectPath } = await aclRes.json();
+                                      
+                                      return objectPath;
+                                    }}
+                                    onComplete={(objectPath) => {
+                                      field.onChange(objectPath);
+                                    }}
+                                  >
+                                    <Upload className="h-4 w-4 mr-2" />
+                                    Upload Image
+                                  </ObjectUploader>
+                                  <span className="text-sm text-muted-foreground">or</span>
+                                  <Input
+                                    placeholder="Enter image URL"
+                                    value={field.value || ""}
+                                    onChange={(e) => field.onChange(e.target.value)}
+                                    className="flex-1"
+                                    data-testid="input-featured-image-url"
+                                  />
+                                </div>
+                              )}
+                            </div>
                           </FormControl>
                           <FormDescription>
-                            Enter a URL for the post's featured image
+                            Upload an image or enter a URL for the post's featured image
                           </FormDescription>
-                          {field.value && (
-                            <div className="mt-3 rounded-lg overflow-hidden border border-border">
-                              <img
-                                src={field.value}
-                                alt="Featured image preview"
-                                className="w-full h-32 object-cover"
-                                onError={(e) => {
-                                  (e.target as HTMLImageElement).style.display = 'none';
-                                }}
-                                onLoad={(e) => {
-                                  (e.target as HTMLImageElement).style.display = 'block';
-                                }}
-                                data-testid="img-featured-preview"
-                              />
-                              <div className="hidden items-center justify-center h-32 bg-muted text-muted-foreground text-sm">
-                                <ImageIcon className="h-8 w-8 mr-2" />
-                                Invalid image URL
-                              </div>
-                            </div>
-                          )}
                           <FormMessage />
                         </FormItem>
                       )}

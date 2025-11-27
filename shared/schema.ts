@@ -156,3 +156,14 @@ export const insertNewsletterSubscriberSchema = createInsertSchema(newsletterSub
 });
 export type InsertNewsletterSubscriber = z.infer<typeof insertNewsletterSubscriberSchema>;
 export type NewsletterSubscriber = typeof newsletterSubscribers.$inferSelect;
+
+// Pending uploads tracking table for object storage security
+export const pendingUploads = pgTable("pending_uploads", {
+  id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
+  objectId: varchar("object_id", { length: 255 }).notNull().unique(),
+  ownerId: varchar("owner_id", { length: 255 }).notNull(),
+  expiresAt: timestamp("expires_at").notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export type PendingUpload = typeof pendingUploads.$inferSelect;
