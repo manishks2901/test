@@ -18,6 +18,7 @@ import {
 import { Link } from "wouter";
 import { Search, Calendar, Clock, ArrowRight, BookOpen } from "lucide-react";
 import type { Post, Category } from "@shared/schema";
+import { SEO } from "@/components/SEO";
 
 type PostWithAuthor = Post & {
   author?: { firstName: string | null; lastName: string | null } | null;
@@ -71,6 +72,11 @@ export default function Insights() {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO
+        title="Legal Insights & Articles"
+        description="Stay informed with our latest legal updates, thought leadership articles, and expert commentary on developments in Indian and international law."
+        keywords="legal insights, law articles, legal updates, thought leadership, corporate law updates, litigation news, legal blog"
+      />
       <Header />
       <main className="flex-1">
         <section className="py-16 md:py-24 bg-primary">

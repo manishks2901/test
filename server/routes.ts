@@ -389,4 +389,91 @@ export async function registerRoutes(server: Server, app: Express): Promise<void
       res.status(500).json({ message: "Failed to delete subscriber" });
     }
   });
+
+  // Helper function to escape XML special characters
+  const escapeXml = (str: string): string => {
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&apos;');
+  };
+
+  // Sitemap generation
+  app.get("/sitemap.xml", async (req, res) => {
+    try {
+      const protocol = req.headers['x-forwarded-proto'] || req.protocol || 'https';
+      const host = req.headers['x-forwarded-host'] || req.headers.host || 'wadhwa-law.com';
+      const baseUrl = `${protocol}://${host}`;
+      
+      const posts = await storage.getPosts({ published: true });
+      
+      const staticPages = [
+        { loc: "/", priority: "1.0", changefreq: "weekly" },
+        { loc: "/services", priority: "0.9", changefreq: "monthly" },
+        { loc: "/services/corporate-law", priority: "0.8", changefreq: "monthly" },
+        { loc: "/services/commercial-litigation", priority: "0.8", changefreq: "monthly" },
+        { loc: "/services/real-estate-law", priority: "0.8", changefreq: "monthly" },
+        { loc: "/services/intellectual-property", priority: "0.8", changefreq: "monthly" },
+        { loc: "/services/employment-law", priority: "0.8", changefreq: "monthly" },
+        { loc: "/services/tax-advisory", priority: "0.8", changefreq: "monthly" },
+        { loc: "/services/regulatory-compliance", priority: "0.8", changefreq: "monthly" },
+        { loc: "/services/contract-drafting", priority: "0.8", changefreq: "monthly" },
+        { loc: "/team", priority: "0.8", changefreq: "monthly" },
+        { loc: "/insights", priority: "0.9", changefreq: "weekly" },
+        { loc: "/contact", priority: "0.7", changefreq: "monthly" },
+      ];
+
+      let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
+      xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
+      
+      for (const page of staticPages) {
+        xml += `  <url>\n`;
+        xml += `    <loc>${escapeXml(baseUrl + page.loc)}</loc>\n`;
+        xml += `    <changefreq>${page.changefreq}</changefreq>\n`;
+        xml += `    <priority>${page.priority}</priority>\n`;
+        xml += `  </url>\n`;
+      }
+      
+      for (const post of posts) {
+        const lastmod = post.updatedAt 
+          ? new Date(post.updatedAt).toISOString().split('T')[0]
+          : post.publishedAt 
+            ? new Date(post.publishedAt).toISOString().split('T')[0]
+            : new Date().toISOString().split('T')[0];
+        const postUrl = `${baseUrl}/insights/${escapeXml(post.slug)}`;
+        xml += `  <url>\n`;
+        xml += `    <loc>${postUrl}</loc>\n`;
+        xml += `    <lastmod>${lastmod}</lastmod>\n`;
+        xml += `    <changefreq>monthly</changefreq>\n`;
+        xml += `    <priority>0.7</priority>\n`;
+        xml += `  </url>\n`;
+      }
+      
+      xml += '</urlset>';
+      
+      res.set('Content-Type', 'application/xml');
+      res.send(xml);
+    } catch (error) {
+      console.error("Error generating sitemap:", error);
+      res.status(500).send("Failed to generate sitemap");
+    }
+  });
+
+  // Robots.txt
+  app.get("/robots.txt", (req, res) => {
+    const protocol = req.headers['x-forwarded-proto'] || req.protocol || 'https';
+    const host = req.headers['x-forwarded-host'] || req.headers.host || 'wadhwa-law.com';
+    const baseUrl = `${protocol}://${host}`;
+    
+    const robotsTxt = `User-agent: *
+Allow: /
+Disallow: /admin
+
+Sitemap: ${baseUrl}/sitemap.xml
+`;
+    res.set('Content-Type', 'text/plain');
+    res.send(robotsTxt);
+  });
 }

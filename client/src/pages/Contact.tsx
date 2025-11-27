@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { SEO } from "@/components/SEO";
 import {
   Form,
   FormControl,
@@ -120,6 +121,11 @@ export default function Contact() {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO
+        title="Contact Us - Schedule a Consultation"
+        description="Contact Wadhwa & Co. to schedule a confidential consultation with our experienced attorneys. Office located in Mumbai."
+        keywords="contact lawyer, legal consultation, law firm contact, Mumbai lawyer, schedule consultation, legal advice"
+      />
       <Header />
       <main className="flex-1">
         <section className="py-16 md:py-24 bg-primary">

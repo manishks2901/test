@@ -91,7 +91,7 @@ export function ServicesSection() {
                 <p className="text-muted-foreground text-sm leading-relaxed mb-6">
                   {service.description}
                 </p>
-                <Link href={`/services#${service.slug}`}>
+                <Link href={`/services/${service.slug}`}>
                   <Button
                     variant="ghost"
                     className="p-0 h-auto text-gold hover:text-gold/80 font-medium"

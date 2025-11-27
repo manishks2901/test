@@ -10,6 +10,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import { Calendar, Clock, ArrowLeft, ArrowRight, BookOpen } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
+import { SEO } from "@/components/SEO";
 import type { Post, Category } from "@shared/schema";
 
 type PostWithRelations = Post & {
@@ -118,6 +119,14 @@ export default function InsightDetail() {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO
+        title={post.title}
+        description={post.excerpt || `Read ${post.title} - legal insights from Wadhwa & Co.`}
+        keywords={`${post.category?.name || "legal"}, legal insights, law articles, Wadhwa & Co`}
+        ogType="article"
+        articleAuthor={getAuthorName(post)}
+        articlePublishedTime={post.publishedAt ? new Date(post.publishedAt).toISOString() : undefined}
+      />
       <Header />
       <main className="flex-1">
         <article>

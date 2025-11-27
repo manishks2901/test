@@ -3,6 +3,7 @@ import { Footer } from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
+import { SEO } from "@/components/SEO";
 import {
   Building2,
   Scale,
@@ -142,6 +143,11 @@ const services = [
 export default function Services() {
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO
+        title="Legal Services & Practice Areas"
+        description="Explore our comprehensive legal services including corporate law, commercial litigation, real estate, intellectual property, employment law, and tax advisory."
+        keywords="legal services, corporate law, commercial litigation, real estate law, intellectual property, employment law, tax advisory, regulatory compliance, contract drafting"
+      />
       <Header />
       <main className="flex-1">
         <section className="py-16 md:py-24 bg-primary">
@@ -201,15 +207,26 @@ export default function Services() {
                             </div>
                           ))}
                         </div>
-                        <Link href="/contact">
-                          <Button
-                            className="bg-gold hover:bg-gold/90 text-gold-foreground border border-gold"
-                            data-testid={`button-inquire-${service.id}`}
-                          >
-                            Inquire About This Service
-                            <ArrowRight className="ml-2 h-4 w-4" />
-                          </Button>
-                        </Link>
+                        <div className="flex flex-wrap gap-3">
+                          <Link href={`/services/${service.id}`}>
+                            <Button
+                              variant="outline"
+                              data-testid={`button-learn-more-${service.id}`}
+                            >
+                              Learn More
+                              <ArrowRight className="ml-2 h-4 w-4" />
+                            </Button>
+                          </Link>
+                          <Link href="/contact">
+                            <Button
+                              className="bg-gold hover:bg-gold/90 text-gold-foreground border border-gold"
+                              data-testid={`button-inquire-${service.id}`}
+                            >
+                              Inquire Now
+                              <ArrowRight className="ml-2 h-4 w-4" />
+                            </Button>
+                          </Link>
+                        </div>
                       </div>
                     </div>
                   </CardContent>

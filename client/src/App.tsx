@@ -9,6 +9,7 @@ import { Scale } from "lucide-react";
 
 import Landing from "@/pages/Landing";
 import Services from "@/pages/Services";
+import PracticeAreaDetail from "@/pages/PracticeAreaDetail";
 import Team from "@/pages/Team";
 import Insights from "@/pages/Insights";
 import InsightDetail from "@/pages/InsightDetail";
@@ -51,6 +52,7 @@ function Router() {
     <Switch>
       <Route path="/" component={Landing} />
       <Route path="/services" component={Services} />
+      <Route path="/services/:slug" component={PracticeAreaDetail} />
       <Route path="/team" component={Team} />
       <Route path="/insights" component={Insights} />
       <Route path="/insights/:slug" component={InsightDetail} />

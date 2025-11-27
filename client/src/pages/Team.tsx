@@ -9,6 +9,7 @@ import { Linkedin, Mail, ArrowRight } from "lucide-react";
 import { Link } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import type { TeamMember } from "@shared/schema";
+import { SEO } from "@/components/SEO";
 
 function getInitials(name: string): string {
   return name
@@ -79,6 +80,11 @@ export default function Team() {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO
+        title="Our Team - Experienced Attorneys"
+        description="Meet our team of experienced attorneys with expertise in corporate law, litigation, real estate, intellectual property, and more."
+        keywords="attorneys, lawyers, legal team, partners, associates, Mumbai lawyers, corporate attorneys, litigation lawyers"
+      />
       <Header />
       <main className="flex-1">
         <section className="py-16 md:py-24 bg-primary">
