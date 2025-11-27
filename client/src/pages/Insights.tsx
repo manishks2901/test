@@ -159,9 +159,22 @@ export default function Insights() {
                     data-testid={`card-post-${post.id}`}
                   >
                     <CardContent className="p-0">
-                      <div className="h-48 bg-gradient-to-br from-primary/10 to-gold/10 flex items-center justify-center">
-                        <BookOpen className="h-12 w-12 text-primary/30" />
-                      </div>
+                      <Link href={`/insights/${post.slug}`}>
+                        {post.featuredImage ? (
+                          <div className="h-48 overflow-hidden rounded-t-lg">
+                            <img
+                              src={post.featuredImage}
+                              alt={post.title}
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                              data-testid={`img-post-featured-${post.id}`}
+                            />
+                          </div>
+                        ) : (
+                          <div className="h-48 bg-gradient-to-br from-primary/10 to-gold/10 flex items-center justify-center rounded-t-lg">
+                            <BookOpen className="h-12 w-12 text-primary/30" />
+                          </div>
+                        )}
+                      </Link>
                       <div className="p-6">
                         {post.category && (
                           <Badge

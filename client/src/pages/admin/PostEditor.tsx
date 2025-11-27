@@ -30,7 +30,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { isUnauthorizedError } from "@/lib/authUtils";
-import { ArrowLeft, Save, Eye } from "lucide-react";
+import { ArrowLeft, Save, Eye, ImageIcon } from "lucide-react";
 import type { Post, Category } from "@shared/schema";
 
 const postSchema = z.object({
@@ -424,6 +424,29 @@ export default function PostEditor() {
                               data-testid="input-featured-image"
                             />
                           </FormControl>
+                          <FormDescription>
+                            Enter a URL for the post's featured image
+                          </FormDescription>
+                          {field.value && (
+                            <div className="mt-3 rounded-lg overflow-hidden border border-border">
+                              <img
+                                src={field.value}
+                                alt="Featured image preview"
+                                className="w-full h-32 object-cover"
+                                onError={(e) => {
+                                  (e.target as HTMLImageElement).style.display = 'none';
+                                }}
+                                onLoad={(e) => {
+                                  (e.target as HTMLImageElement).style.display = 'block';
+                                }}
+                                data-testid="img-featured-preview"
+                              />
+                              <div className="hidden items-center justify-center h-32 bg-muted text-muted-foreground text-sm">
+                                <ImageIcon className="h-8 w-8 mr-2" />
+                                Invalid image URL
+                              </div>
+                            </div>
+                          )}
                           <FormMessage />
                         </FormItem>
                       )}

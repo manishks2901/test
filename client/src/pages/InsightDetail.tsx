@@ -42,7 +42,7 @@ export default function InsightDetail() {
   }, [post]);
 
   const { data: relatedPosts } = useQuery<PostWithRelations[]>({
-    queryKey: ["/api/posts", { published: true, limit: 3 }],
+    queryKey: ["/api/posts?published=true&limit=3"],
     enabled: !!post,
   });
 
@@ -184,6 +184,23 @@ export default function InsightDetail() {
               </div>
             </div>
           </section>
+
+          {post.featuredImage && (
+            <section className="py-8 md:py-12">
+              <div className="container mx-auto px-4 md:px-8 lg:px-12">
+                <div className="max-w-4xl mx-auto">
+                  <div className="rounded-lg overflow-hidden shadow-lg">
+                    <img
+                      src={post.featuredImage}
+                      alt={post.title}
+                      className="w-full h-auto max-h-[500px] object-cover"
+                      data-testid="img-post-featured"
+                    />
+                  </div>
+                </div>
+              </div>
+            </section>
+          )}
 
           <section className="py-16 md:py-24">
             <div className="container mx-auto px-4 md:px-8 lg:px-12">
