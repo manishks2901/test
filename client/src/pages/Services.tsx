@@ -4,149 +4,16 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import { SEO } from "@/components/SEO";
-import {
-  Building2,
-  Scale,
-  Home,
-  Lightbulb,
-  Users,
-  Calculator,
-  Shield,
-  FileText,
-  ArrowRight,
-  CheckCircle,
-} from "lucide-react";
-
-const services = [
-  {
-    id: "corporate-law",
-    icon: Building2,
-    title: "Corporate Law",
-    description:
-      "Comprehensive corporate legal services including mergers, acquisitions, joint ventures, and corporate governance advisory.",
-    details: [
-      "Mergers & Acquisitions",
-      "Corporate Restructuring",
-      "Joint Ventures & Strategic Alliances",
-      "Corporate Governance",
-      "Regulatory Compliance",
-      "Securities Law",
-    ],
-  },
-  {
-    id: "commercial-litigation",
-    icon: Scale,
-    title: "Commercial Litigation",
-    description:
-      "Strategic representation in complex commercial disputes, arbitration, and alternative dispute resolution proceedings.",
-    details: [
-      "Commercial Contract Disputes",
-      "Shareholder Disputes",
-      "Banking & Finance Litigation",
-      "International Arbitration",
-      "Mediation Services",
-      "Appellate Practice",
-    ],
-  },
-  {
-    id: "real-estate-law",
-    icon: Home,
-    title: "Real Estate Law",
-    description:
-      "Expert guidance in property transactions, development projects, lease agreements, and real estate dispute resolution.",
-    details: [
-      "Property Acquisitions",
-      "Development Projects",
-      "Commercial Leasing",
-      "Real Estate Finance",
-      "Title Due Diligence",
-      "Property Disputes",
-    ],
-  },
-  {
-    id: "intellectual-property",
-    icon: Lightbulb,
-    title: "Intellectual Property",
-    description:
-      "Protection and enforcement of patents, trademarks, copyrights, and trade secrets across all industries.",
-    details: [
-      "Patent Registration & Prosecution",
-      "Trademark Protection",
-      "Copyright Advisory",
-      "Trade Secret Protection",
-      "IP Licensing",
-      "IP Litigation",
-    ],
-  },
-  {
-    id: "employment-law",
-    icon: Users,
-    title: "Employment Law",
-    description:
-      "Advisory on employment contracts, workplace policies, labor disputes, and regulatory compliance matters.",
-    details: [
-      "Employment Contracts",
-      "Workplace Policies",
-      "Labor Disputes",
-      "Termination Advisory",
-      "Executive Compensation",
-      "POSH Compliance",
-    ],
-  },
-  {
-    id: "tax-advisory",
-    icon: Calculator,
-    title: "Tax Advisory",
-    description:
-      "Strategic tax planning, compliance assistance, and representation in tax disputes and assessments.",
-    details: [
-      "Corporate Tax Planning",
-      "Transfer Pricing",
-      "GST Advisory",
-      "Tax Dispute Resolution",
-      "International Taxation",
-      "Tax Due Diligence",
-    ],
-  },
-  {
-    id: "regulatory-compliance",
-    icon: Shield,
-    title: "Regulatory Compliance",
-    description:
-      "Navigating complex regulatory frameworks and ensuring business compliance across sectors.",
-    details: [
-      "SEBI Compliance",
-      "RBI Regulations",
-      "FEMA Advisory",
-      "Anti-Money Laundering",
-      "Data Protection",
-      "Industry-Specific Compliance",
-    ],
-  },
-  {
-    id: "contract-drafting",
-    icon: FileText,
-    title: "Contract Drafting",
-    description:
-      "Expert drafting, review, and negotiation of commercial contracts and legal documentation.",
-    details: [
-      "Commercial Agreements",
-      "Service Contracts",
-      "Technology Agreements",
-      "Distribution Agreements",
-      "Non-Disclosure Agreements",
-      "Standard Form Contracts",
-    ],
-  },
-];
+import { ArrowRight, CheckCircle } from "lucide-react";
+import { practiceAreas } from "@/lib/practiceAreas";
 
 export default function Services() {
   return (
     <div className="min-h-screen flex flex-col">
       <SEO
         title="Legal Services & Practice Areas"
-        description="Explore our comprehensive legal services including corporate law, commercial litigation, real estate, intellectual property, employment law, and tax advisory."
-        keywords="legal services, corporate law, commercial litigation, real estate law, intellectual property, employment law, tax advisory, regulatory compliance, contract drafting"
+        description="Explore our comprehensive legal services across family law, dispute resolution, criminal law, intellectual property, real estate, taxation, banking and finance, capital markets, commercial, and employment matters."
+        keywords="legal services, family law, litigation, dispute resolution, criminal law, intellectual property, real estate, taxation, banking and finance, capital markets, commercial law, employment law, New Delhi"
       />
       <Header />
       <main className="flex-1">
@@ -167,10 +34,57 @@ export default function Services() {
           </div>
         </section>
 
+        <section className="py-16 md:py-24 bg-muted/20">
+          <div className="container mx-auto px-4 md:px-8 lg:px-12">
+            <div className="text-center max-w-3xl mx-auto mb-12">
+              <span className="inline-block text-gold font-semibold text-sm uppercase tracking-wider mb-4">
+                Explore
+              </span>
+              <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-4">
+                Practice Areas at a Glance
+              </h2>
+              <p className="text-muted-foreground">
+                Select any area to view the detailed services and approach specific to that practice.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+              {practiceAreas.map((service, index) => (
+                <Card
+                  key={`summary-${service.id}`}
+                  className="group border border-border/50 hover:border-gold/30 transition-all duration-300 hover-elevate"
+                  style={{ animationDelay: `${index * 0.05}s` }}
+                >
+                  <CardContent className="p-8">
+                    <div className="w-14 h-14 rounded-lg bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-gold/10 transition-colors">
+                      <service.icon className="h-7 w-7 text-primary group-hover:text-gold transition-colors" />
+                    </div>
+                    <h3 className="font-serif text-xl font-semibold text-foreground mb-3">
+                      {service.title}
+                    </h3>
+                    <p className="text-muted-foreground text-sm leading-relaxed mb-6">
+                      {service.description}
+                    </p>
+                    <Link href={`/services/${service.id}`}>
+                      <Button
+                        variant="ghost"
+                        className="p-0 h-auto text-gold hover:text-gold/80 font-medium"
+                        data-testid={`link-service-${service.id}-summary`}
+                      >
+                        Practice Areas
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </Button>
+                    </Link>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+
         <section className="py-16 md:py-24">
           <div className="container mx-auto px-4 md:px-8 lg:px-12">
             <div className="grid gap-12">
-              {services.map((service, index) => (
+              {practiceAreas.map((service, index) => (
                 <Card
                   key={service.id}
                   id={service.id}
@@ -195,7 +109,7 @@ export default function Services() {
                           Our Services Include:
                         </h3>
                         <div className="grid sm:grid-cols-2 gap-4 mb-8">
-                          {service.details.map((detail) => (
+                          {service.services.map((detail) => (
                             <div
                               key={detail}
                               className="flex items-center gap-3"
@@ -247,7 +161,7 @@ export default function Services() {
             </p>
             <Link href="/contact">
               <Button size="lg" data-testid="button-services-contact">
-                Schedule a Consultation
+                Request a Free Consultation
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>

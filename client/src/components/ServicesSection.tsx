@@ -1,60 +1,9 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import {
-  Building2,
-  Scale,
-  Home,
-  Lightbulb,
-  Users,
-  Calculator,
-  ArrowRight,
-} from "lucide-react";
-
-const services = [
-  {
-    icon: Building2,
-    title: "Corporate Law",
-    description:
-      "Comprehensive corporate legal services including mergers, acquisitions, joint ventures, and corporate governance advisory.",
-    slug: "corporate-law",
-  },
-  {
-    icon: Scale,
-    title: "Commercial Litigation",
-    description:
-      "Strategic representation in complex commercial disputes, arbitration, and alternative dispute resolution proceedings.",
-    slug: "commercial-litigation",
-  },
-  {
-    icon: Home,
-    title: "Real Estate Law",
-    description:
-      "Expert guidance in property transactions, development projects, lease agreements, and real estate dispute resolution.",
-    slug: "real-estate-law",
-  },
-  {
-    icon: Lightbulb,
-    title: "Intellectual Property",
-    description:
-      "Protection and enforcement of patents, trademarks, copyrights, and trade secrets across all industries.",
-    slug: "intellectual-property",
-  },
-  {
-    icon: Users,
-    title: "Employment Law",
-    description:
-      "Advisory on employment contracts, workplace policies, labor disputes, and regulatory compliance matters.",
-    slug: "employment-law",
-  },
-  {
-    icon: Calculator,
-    title: "Tax Advisory",
-    description:
-      "Strategic tax planning, compliance assistance, and representation in tax disputes and assessments.",
-    slug: "tax-advisory",
-  },
-];
+import { ArrowRight } from "lucide-react";
+import { practiceAreas } from "@/lib/practiceAreas";
+import { AnimatedReveal } from "@/components/AnimatedReveal";
 
 export function ServicesSection() {
   return (
@@ -74,35 +23,35 @@ export function ServicesSection() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {services.map((service, index) => (
-            <Card
-              key={service.slug}
-              className="group border border-border/50 hover:border-gold/30 transition-all duration-300 hover-elevate"
-              style={{ animationDelay: `${index * 0.1}s` }}
-              data-testid={`card-service-${service.slug}`}
-            >
-              <CardContent className="p-8">
-                <div className="w-14 h-14 rounded-lg bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-gold/10 transition-colors">
-                  <service.icon className="h-7 w-7 text-primary group-hover:text-gold transition-colors" />
-                </div>
-                <h3 className="font-serif text-xl font-semibold text-foreground mb-3">
-                  {service.title}
-                </h3>
-                <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-                  {service.description}
-                </p>
-                <Link href={`/services/${service.slug}`}>
-                  <Button
-                    variant="ghost"
-                    className="p-0 h-auto text-gold hover:text-gold/80 font-medium"
-                    data-testid={`link-service-${service.slug}`}
-                  >
-                    Learn More
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </Link>
-              </CardContent>
-            </Card>
+          {practiceAreas.map((service, index) => (
+            <AnimatedReveal key={service.id} delay={0.08 * index}>
+              <Card
+                className="group border border-border/50 hover:border-gold/30 transition-all duration-300 hover-elevate"
+                data-testid={`card-service-${service.id}`}
+              >
+                <CardContent className="p-8">
+                  <div className="w-14 h-14 rounded-lg bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-gold/10 transition-colors">
+                    <service.icon className="h-7 w-7 text-primary group-hover:text-gold transition-colors" />
+                  </div>
+                  <h3 className="font-serif text-xl font-semibold text-foreground mb-3">
+                    {service.title}
+                  </h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed mb-6">
+                    {service.description}
+                  </p>
+                  <Link href={`/services/${service.id}`}>
+                    <Button
+                      variant="ghost"
+                      className="p-0 h-auto text-gold hover:text-gold/80 font-medium"
+                      data-testid={`link-service-${service.id}`}
+                    >
+                      Learn More
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </Link>
+                </CardContent>
+              </Card>
+            </AnimatedReveal>
           ))}
         </div>
 

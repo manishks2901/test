@@ -1,16 +1,8 @@
 import { Link } from "wouter";
-import { Scale, MapPin, Phone, Mail, Linkedin, Twitter } from "lucide-react";
+import { MapPin, Phone, Mail, Linkedin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { NewsletterSignup } from "./NewsletterSignup";
-
-const practiceAreas = [
-  "Corporate Law",
-  "Commercial Litigation",
-  "Real Estate Law",
-  "Intellectual Property",
-  "Employment Law",
-  "Tax Advisory",
-];
+import { practiceAreaTitles } from "@/lib/practiceAreas";
 
 const quickLinks = [
   { href: "/services", label: "Our Services" },
@@ -26,34 +18,38 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           <div className="space-y-6">
             <div className="flex items-center gap-2">
-              <Scale className="h-8 w-8 text-gold" />
+              <img
+                src="/logo.png"
+                alt="Wadhwa & Co. logo"
+                className="h-12 w-auto"
+                loading="lazy"
+              />
               <div>
                 <h3 className="font-serif text-xl font-bold">Wadhwa & Co.</h3>
                 <p className="text-xs uppercase tracking-[0.15em] text-primary-foreground/70">
-                  Advocates & Solicitors
+                  Advocates & Legal Consultants
                 </p>
               </div>
             </div>
             <p className="text-sm text-primary-foreground/80 leading-relaxed">
-              Providing exceptional legal services with integrity, expertise, and a 
-              commitment to achieving the best outcomes for our clients since 1985.
+              Providing bespoke legal solutions with integrity, precision, and a 
+              commitment to delivering the right outcomes for our clients.
             </p>
             <div className="flex gap-2">
               <Button
+                asChild
                 variant="ghost"
                 size="icon"
                 className="text-primary-foreground/70 hover:text-gold hover:bg-primary-foreground/10"
                 data-testid="link-linkedin"
               >
-                <Linkedin className="h-5 w-5" />
-              </Button>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="text-primary-foreground/70 hover:text-gold hover:bg-primary-foreground/10"
-                data-testid="link-twitter"
-              >
-                <Twitter className="h-5 w-5" />
+                <a
+                  href="https://www.linkedin.com/company/107333911/admin/page-posts/published/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Linkedin className="h-5 w-5" />
+                </a>
               </Button>
             </div>
           </div>
@@ -61,7 +57,7 @@ export function Footer() {
           <div>
             <h4 className="font-serif text-lg font-semibold mb-6">Practice Areas</h4>
             <ul className="space-y-3">
-              {practiceAreas.map((area) => (
+              {practiceAreaTitles.map((area) => (
                 <li key={area}>
                   <Link
                     href="/services"
@@ -98,29 +94,29 @@ export function Footer() {
               <li className="flex items-start gap-3">
                 <MapPin className="h-5 w-5 text-gold shrink-0 mt-0.5" />
                 <span className="text-sm text-primary-foreground/80">
-                  Suite 1200, Legal Tower<br />
-                  100 Business District<br />
-                  Mumbai 400001
+                  C-104, Third Floor, Lajpat Nagar Part - I<br />
+                  Opposite Defence Colony Flyover<br />
+                  New Delhi - 110024
                 </span>
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="h-5 w-5 text-gold shrink-0" />
                 <a
-                  href="tel:+912212345678"
+                  href="tel:+911145040303"
                   className="text-sm text-primary-foreground/80 hover:text-gold transition-colors"
                   data-testid="link-footer-phone"
                 >
-                  +91 22 1234 5678
+                  91-11-45040303
                 </a>
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="h-5 w-5 text-gold shrink-0" />
                 <a
-                  href="mailto:contact@wadhwa-law.com"
+                  href="mailto:delhi@wadhwalawgroup.com"
                   className="text-sm text-primary-foreground/80 hover:text-gold transition-colors"
                   data-testid="link-footer-email"
                 >
-                  contact@wadhwa-law.com
+                  delhi@wadhwalawgroup.com
                 </a>
               </li>
             </ul>
@@ -144,7 +140,7 @@ export function Footer() {
         <div className="container mx-auto px-4 md:px-8 lg:px-12 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-xs text-primary-foreground/60">
-              &copy; {new Date().getFullYear()} Wadhwa & Co. All rights reserved.
+              © 2024 All Rights Reserved by @wadhwalawgroup.com
             </p>
             <div className="flex gap-6">
               <Link

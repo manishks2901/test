@@ -13,8 +13,8 @@ interface SEOProps {
   canonicalUrl?: string;
 }
 
-const DEFAULT_DESCRIPTION = "Wadhwa & Co. - Leading law firm providing comprehensive legal services since 1985. Expert attorneys in corporate law, litigation, real estate, and intellectual property.";
-const DEFAULT_KEYWORDS = "law firm, legal services, corporate law, litigation, real estate law, intellectual property, tax advisory, Mumbai lawyers, India law firm";
+const DEFAULT_DESCRIPTION = "Wadhwa & Co. - Leading law firm providing comprehensive legal services in New Delhi. Expert attorneys delivering bespoke solutions across key practice areas.";
+const DEFAULT_KEYWORDS = "law firm, legal services, litigation, real estate law, intellectual property, tax advisory, New Delhi lawyers, India law firm, legal consultants";
 
 export function SEO({
   title,

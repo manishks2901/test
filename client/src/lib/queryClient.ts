@@ -7,6 +7,41 @@ async function throwIfResNotOk(res: Response) {
   }
 }
 
+function buildUrlFromQueryKey(queryKey: readonly unknown[]): string {
+  const [base, ...rest] = queryKey;
+  if (!base) {
+    throw new Error("queryKey must include a base URL");
+  }
+
+  let url = String(base);
+  const pathSegments: string[] = [];
+  let params: Record<string, string> = {};
+
+  for (const part of rest) {
+    if (part == null) continue;
+    if (typeof part === "object" && !Array.isArray(part)) {
+      for (const [key, value] of Object.entries(part)) {
+        if (value === undefined || value === null) continue;
+        params[key] = String(value);
+      }
+    } else {
+      pathSegments.push(encodeURIComponent(String(part)));
+    }
+  }
+
+  if (pathSegments.length > 0) {
+    url = `${url.replace(/\/$/, "")}/${pathSegments.join("/")}`;
+  }
+
+  const hasExistingQuery = url.includes("?");
+  const paramString = new URLSearchParams(params).toString();
+  if (paramString) {
+    url = `${url}${hasExistingQuery ? "&" : "?"}${paramString}`;
+  }
+
+  return url;
+}
+
 export async function apiRequest(
   method: string,
   url: string,
@@ -29,7 +64,8 @@ export const getQueryFn: <T>(options: {
 }) => QueryFunction<T> =
   ({ on401: unauthorizedBehavior }) =>
   async ({ queryKey }) => {
-    const res = await fetch(queryKey.join("/") as string, {
+    const url = buildUrlFromQueryKey(queryKey);
+    const res = await fetch(url, {
       credentials: "include",
     });
 

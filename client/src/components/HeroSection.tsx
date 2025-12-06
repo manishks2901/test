@@ -1,6 +1,6 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Award, Users, Clock } from "lucide-react";
+import { ArrowRight, Award } from "lucide-react";
 
 export function HeroSection() {
   return (
@@ -14,22 +14,27 @@ export function HeroSection() {
 
       <div className="container relative mx-auto px-4 md:px-8 lg:px-12 py-20">
         <div className="max-w-4xl">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-gold/20 rounded-full mb-8 animate-fade-in">
-            <Award className="h-4 w-4 text-gold" />
-            <span className="text-sm font-medium text-gold">
-              Established 1985 - Trusted for 40 Years
-            </span>
-          </div>
-
-          <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground leading-tight mb-6 animate-fade-in" style={{ animationDelay: "0.1s" }}>
-            Legal Excellence,{" "}
-            <span className="text-gold">Trusted Counsel</span>
+          <h1
+            className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground leading-tight mb-4 animate-fade-in"
+            style={{ animationDelay: "0.1s" }}
+          >
+            Expertise You Can Trust. Excellence You Can Expect.
           </h1>
+          <h2
+            className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-gold leading-tight mb-6 animate-fade-in"
+            style={{ animationDelay: "0.15s" }}
+          >
+            Crafting Legal Strategies That Win.
+          </h2>
 
-          <p className="text-lg md:text-xl text-primary-foreground/80 max-w-2xl mb-10 leading-relaxed animate-fade-in" style={{ animationDelay: "0.2s" }}>
-            Wadhwa & Co. provides comprehensive legal solutions with a 
-            commitment to integrity, precision, and achieving exceptional 
-            outcomes for our distinguished clients across diverse practice areas.
+          <p
+            className="text-lg md:text-xl text-primary-foreground/80 max-w-3xl mb-10 leading-relaxed animate-fade-in"
+            style={{ animationDelay: "0.25s" }}
+          >
+            Our firm delivers refined legal craftsmanship backed by deep subject-matter mastery. We focus on offering highly personalised
+            solutions, meticulous legal analysis, and strategic representation for clients who demand the highest standards. Every matter—big or
+            small—receives the same level of care, rigor, and professional excellence. When you choose us, you choose a partner whose expertise
+            you can trust and whose outcomes you can rely on.
           </p>
 
           <div className="flex flex-wrap gap-4 mb-16 animate-fade-in" style={{ animationDelay: "0.3s" }}>
@@ -39,7 +44,7 @@ export function HeroSection() {
                 className="bg-gold hover:bg-gold/90 text-gold-foreground font-semibold px-8 border border-gold"
                 data-testid="button-hero-consultation"
               >
-                Schedule Consultation
+                Request a Free Consultation
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
@@ -50,40 +55,11 @@ export function HeroSection() {
                 className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 backdrop-blur-sm"
                 data-testid="button-hero-services"
               >
-                Explore Services
+                Practice areas
               </Button>
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 animate-fade-in" style={{ animationDelay: "0.4s" }}>
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-lg bg-gold/20 flex items-center justify-center">
-                <Award className="h-6 w-6 text-gold" />
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-primary-foreground">500+</p>
-                <p className="text-sm text-primary-foreground/70">Cases Won</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-lg bg-gold/20 flex items-center justify-center">
-                <Users className="h-6 w-6 text-gold" />
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-primary-foreground">200+</p>
-                <p className="text-sm text-primary-foreground/70">Happy Clients</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-lg bg-gold/20 flex items-center justify-center">
-                <Clock className="h-6 w-6 text-gold" />
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-primary-foreground">40+</p>
-                <p className="text-sm text-primary-foreground/70">Years Experience</p>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </section>

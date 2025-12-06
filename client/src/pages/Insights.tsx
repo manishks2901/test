@@ -1,24 +1,15 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Link } from "wouter";
-import { Search, Calendar, Clock, ArrowRight, BookOpen } from "lucide-react";
+import { Calendar, Clock, ArrowRight, ArrowLeft, BookOpen, ChevronLeft, ChevronRight } from "lucide-react";
 import type { Post, Category } from "@shared/schema";
 import { SEO } from "@/components/SEO";
+import { AnimatedReveal } from "@/components/AnimatedReveal";
 
 type PostWithAuthor = Post & {
   author?: { firstName: string | null; lastName: string | null } | null;
@@ -26,8 +17,7 @@ type PostWithAuthor = Post & {
 };
 
 export default function Insights() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const { data: posts, isLoading: postsLoading } = useQuery<PostWithAuthor[]>({
     queryKey: ["/api/posts?published=true"],
@@ -37,15 +27,22 @@ export default function Insights() {
     queryKey: ["/api/categories"],
   });
 
-  const filteredPosts = posts?.filter((post) => {
-    const matchesSearch =
-      post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      post.excerpt?.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory =
-      selectedCategory === "all" ||
-      post.categoryId?.toString() === selectedCategory;
-    return matchesSearch && matchesCategory;
-  });
+  const itemsPerPage = 3;
+  const visiblePosts = posts || [];
+  const totalPages = Math.ceil(visiblePosts.length / itemsPerPage);
+  const currentPage = Math.floor(currentIndex / itemsPerPage);
+  const paginatedPosts = visiblePosts.slice(
+    currentPage * itemsPerPage,
+    (currentPage + 1) * itemsPerPage
+  );
+
+  const handlePrevious = () => {
+    setCurrentIndex((prev) => (prev - itemsPerPage >= 0 ? prev - itemsPerPage : Math.max(0, visiblePosts.length - itemsPerPage)));
+  };
+
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev + itemsPerPage < visiblePosts.length ? prev + itemsPerPage : 0));
+  };
 
   const formatDate = (date: Date | string | null) => {
     if (!date) return "";
@@ -71,90 +68,42 @@ export default function Insights() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <SEO
-        title="Legal Insights & Articles"
-        description="Stay informed with our latest legal updates, thought leadership articles, and expert commentary on developments in Indian and international law."
-        keywords="legal insights, law articles, legal updates, thought leadership, corporate law updates, litigation news, legal blog"
-      />
-      <Header />
-      <main className="flex-1">
-        <section className="py-16 md:py-24 bg-primary">
-          <div className="container mx-auto px-4 md:px-8 lg:px-12">
-            <div className="max-w-3xl">
-              <span className="inline-block text-gold font-semibold text-sm uppercase tracking-wider mb-4">
-                Insights & Articles
-              </span>
-              <h1 className="font-serif text-4xl md:text-5xl font-bold text-primary-foreground mb-6">
-                Legal Insights
-              </h1>
-              <p className="text-lg text-primary-foreground/80 leading-relaxed">
-                Stay informed with our latest legal updates, thought leadership 
-                articles, and expert commentary on developments in the law.
-              </p>
-            </div>
-          </div>
-        </section>
+    <section className="py-16 md:py-24" id="insights">
+      <div className="container mx-auto px-4 md:px-8 lg:px-12">
+        <div className="max-w-3xl mb-10">
+          <span className="inline-block text-gold font-semibold text-sm uppercase tracking-wider mb-4">
+            Insights & Articles
+          </span>
+          <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-3">
+            Legal Insights
+          </h2>
+          <p className="text-muted-foreground">
+            Stay informed with our latest legal updates, thought leadership, and commentary across key practice areas.
+          </p>
+        </div>
 
-        <section className="py-8 border-b border-border sticky top-16 md:top-20 bg-background z-40">
-          <div className="container mx-auto px-4 md:px-8 lg:px-12">
-            <div className="flex flex-col md:flex-row gap-4">
-              <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input
-                  placeholder="Search articles..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10"
-                  data-testid="input-search-insights"
-                />
-              </div>
-              <Select
-                value={selectedCategory}
-                onValueChange={setSelectedCategory}
-              >
-                <SelectTrigger className="w-full md:w-[200px]" data-testid="select-category">
-                  <SelectValue placeholder="All Categories" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Categories</SelectItem>
-                  {categories?.map((category) => (
-                    <SelectItem
-                      key={category.id}
-                      value={category.id.toString()}
-                    >
-                      {category.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+        {postsLoading ? (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[1, 2, 3].map((i) => (
+              <Card key={i} className="border border-border/50">
+                <CardContent className="p-0">
+                  <Skeleton className="h-48 rounded-t-md" />
+                  <div className="p-6 space-y-4">
+                    <Skeleton className="h-4 w-20" />
+                    <Skeleton className="h-6 w-full" />
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-3/4" />
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
           </div>
-        </section>
-
-        <section className="py-16 md:py-24">
-          <div className="container mx-auto px-4 md:px-8 lg:px-12">
-            {postsLoading ? (
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {[1, 2, 3, 4, 5, 6].map((i) => (
-                  <Card key={i} className="border border-border/50">
-                    <CardContent className="p-0">
-                      <Skeleton className="h-48 rounded-t-md" />
-                      <div className="p-6 space-y-4">
-                        <Skeleton className="h-4 w-20" />
-                        <Skeleton className="h-6 w-full" />
-                        <Skeleton className="h-4 w-full" />
-                        <Skeleton className="h-4 w-3/4" />
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            ) : filteredPosts && filteredPosts.length > 0 ? (
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {filteredPosts.map((post) => (
+        ) : paginatedPosts && paginatedPosts.length > 0 ? (
+          <>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+              {paginatedPosts.map((post, idx) => (
+                <AnimatedReveal key={post.id} delay={idx * 0.05}>
                   <Card
-                    key={post.id}
                     className="group border border-border/50 overflow-visible hover-elevate"
                     data-testid={`card-post-${post.id}`}
                   >
@@ -177,10 +126,7 @@ export default function Insights() {
                       </Link>
                       <div className="p-6">
                         {post.category && (
-                          <Badge
-                            variant="secondary"
-                            className="bg-gold/10 text-gold border-gold/20 mb-4"
-                          >
+                          <Badge variant="secondary" className="bg-gold/10 text-gold border-gold/20 mb-4">
                             {post.category.name}
                           </Badge>
                         )}
@@ -194,16 +140,14 @@ export default function Insights() {
                             {post.excerpt}
                           </p>
                         )}
-                        <div className="flex items-center justify-between pt-4 border-t border-border">
+                        <div className="flex items-center justify-between pt-4 border-t border-border mb-4">
                           <div className="flex items-center gap-2">
                             <Avatar className="w-8 h-8">
                               <AvatarFallback className="bg-primary text-primary-foreground text-xs">
                                 {getAuthorInitials(post)}
                               </AvatarFallback>
                             </Avatar>
-                            <span className="text-sm text-muted-foreground">
-                              {getAuthorName(post)}
-                            </span>
+                            <span className="text-sm text-muted-foreground">{getAuthorName(post)}</span>
                           </div>
                           <div className="flex items-center gap-3 text-xs text-muted-foreground">
                             <span className="flex items-center gap-1">
@@ -216,57 +160,57 @@ export default function Insights() {
                             </span>
                           </div>
                         </div>
+                        <Link href={`/insights/${post.slug}`}>
+                          <Button
+                            variant="ghost"
+                            className="p-0 h-auto text-gold hover:text-gold/80 font-medium w-full justify-start"
+                            data-testid={`link-insight-${post.id}`}
+                          >
+                            Learn More
+                            <ArrowRight className="ml-2 h-4 w-4" />
+                          </Button>
+                        </Link>
                       </div>
                     </CardContent>
                   </Card>
-                ))}
-              </div>
-            ) : (
-              <div className="text-center py-16">
-                <BookOpen className="h-16 w-16 mx-auto text-muted-foreground/30 mb-6" />
-                <h3 className="font-serif text-2xl font-semibold text-foreground mb-3">
-                  No articles found
-                </h3>
-                <p className="text-muted-foreground mb-6">
-                  {searchQuery || selectedCategory !== "all"
-                    ? "Try adjusting your search or filter criteria."
-                    : "Check back soon for our latest insights and legal updates."}
-                </p>
-                {(searchQuery || selectedCategory !== "all") && (
-                  <Button
-                    variant="outline"
-                    onClick={() => {
-                      setSearchQuery("");
-                      setSelectedCategory("all");
-                    }}
-                    data-testid="button-clear-filters"
-                  >
-                    Clear Filters
-                  </Button>
-                )}
+                </AnimatedReveal>
+              ))}
+            </div>
+
+            {totalPages > 1 && (
+              <div className="flex items-center justify-center gap-4">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={handlePrevious}
+                  data-testid="button-carousel-prev"
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                </Button>
+                <span className="text-sm text-muted-foreground">
+                  Page {currentPage + 1} of {totalPages}
+                </span>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={handleNext}
+                  data-testid="button-carousel-next"
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </Button>
               </div>
             )}
-          </div>
-        </section>
-
-        <section className="py-16 md:py-24 bg-muted/30">
-          <div className="container mx-auto px-4 md:px-8 lg:px-12 text-center">
-            <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-6">
-              Have a Legal Question?
-            </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-8">
-              Our team is ready to provide expert guidance on your legal matters.
+          </>
+        ) : (
+          <div className="text-center py-16">
+            <BookOpen className="h-16 w-16 mx-auto text-muted-foreground/30 mb-6" />
+            <h3 className="font-serif text-2xl font-semibold text-foreground mb-3">No articles found</h3>
+            <p className="text-muted-foreground mb-6">
+              Check back soon for our latest insights and legal updates.
             </p>
-            <Link href="/contact">
-              <Button size="lg" data-testid="button-insights-contact">
-                Contact Us
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
           </div>
-        </section>
-      </main>
-      <Footer />
-    </div>
+        )}
+      </div>
+    </section>
   );
 }

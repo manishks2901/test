@@ -10,6 +10,7 @@ import { Link } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import type { TeamMember } from "@shared/schema";
 import { SEO } from "@/components/SEO";
+import { fallbackTeamMembers } from "@/lib/teamFallback";
 
 function getInitials(name: string): string {
   return name
@@ -75,15 +76,19 @@ export default function Team() {
     queryKey: ["/api/team"],
   });
 
-  const partners = teamMembers?.filter((m) => m.isPartner) || [];
-  const associates = teamMembers?.filter((m) => !m.isPartner) || [];
+  const hasTeam = teamMembers && teamMembers.length > 0;
+  const resolvedTeam =
+    !isLoading && hasTeam ? teamMembers : !isLoading ? fallbackTeamMembers : [];
+
+  const partners = resolvedTeam.filter((m) => m.isPartner);
+  const associates = resolvedTeam.filter((m) => !m.isPartner);
 
   return (
     <div className="min-h-screen flex flex-col">
       <SEO
         title="Our Team - Experienced Attorneys"
         description="Meet our team of experienced attorneys with expertise in corporate law, litigation, real estate, intellectual property, and more."
-        keywords="attorneys, lawyers, legal team, partners, associates, Mumbai lawyers, corporate attorneys, litigation lawyers"
+        keywords="attorneys, lawyers, legal team, partners, associates, New Delhi lawyers, corporate attorneys, litigation lawyers"
       />
       <Header />
       <main className="flex-1">
@@ -250,6 +255,10 @@ export default function Team() {
                   <TeamMemberSkeleton isPartner={false} />
                   <TeamMemberSkeleton isPartner={false} />
                 </>
+              ) : associates.length === 0 ? (
+                <p className="text-muted-foreground">
+                  Associate profiles will be updated shortly.
+                </p>
               ) : (
                 associates.map((associate) => (
                   <Card
@@ -296,7 +305,7 @@ export default function Team() {
             </p>
             <Link href="/contact">
               <Button size="lg" data-testid="button-team-contact">
-                Schedule a Consultation
+                Request a Free Consultation
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>

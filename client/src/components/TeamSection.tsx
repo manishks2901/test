@@ -6,6 +6,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { ArrowRight, Linkedin } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import type { TeamMember } from "@shared/schema";
+import { fallbackTeamMembers } from "@/lib/teamFallback";
 
 function getInitials(name: string): string {
   return name
@@ -36,7 +37,14 @@ export function TeamSection() {
     queryKey: ["/api/team"],
   });
 
-  const partners = teamMembers?.filter((m) => m.isPartner).slice(0, 4) || [];
+  const resolvedTeam =
+    !isLoading && teamMembers && teamMembers.length > 0
+      ? teamMembers
+      : !isLoading
+      ? fallbackTeamMembers
+      : [];
+
+  const partners = resolvedTeam.filter((m) => m.isPartner).slice(0, 4);
 
   return (
     <section className="py-20 md:py-28">

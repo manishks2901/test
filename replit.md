@@ -2,7 +2,7 @@
 
 ## Overview
 
-This is a professional law firm website for Wadhwa & Co., a prestigious legal practice established in 1985. The application provides a comprehensive online presence featuring service descriptions, team profiles, legal insights blog, and contact capabilities. Built as a modern full-stack web application, it combines a React-based frontend with an Express backend, utilizing PostgreSQL for data persistence and Replit's authentication system for admin access.
+This is a professional law firm website for Wadhwa & Co., a prestigious legal practice providing bespoke counsel from New Delhi. The application provides a comprehensive online presence featuring service descriptions, team profiles, legal insights blog, and contact capabilities. Built as a modern full-stack web application, it combines a React-based frontend with an Express backend, utilizing PostgreSQL for data persistence and Replit's authentication system for admin access.
 
 ## User Preferences
 

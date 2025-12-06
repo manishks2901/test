@@ -27,11 +27,11 @@ export function CTASection() {
                 className="bg-gold hover:bg-gold/90 text-gold-foreground font-semibold px-8 border border-gold"
                 data-testid="button-cta-consultation"
               >
-                Schedule Consultation
+                Request a Free Consultation
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
-            <a href="tel:+912212345678">
+            <a href="tel:+911145040303">
               <Button
                 size="lg"
                 variant="outline"
@@ -46,20 +46,20 @@ export function CTASection() {
 
           <div className="flex flex-wrap justify-center gap-8 text-primary-foreground/70">
             <a
-              href="tel:+912212345678"
+              href="tel:+911145040303"
               className="flex items-center gap-2 hover:text-gold transition-colors"
               data-testid="link-cta-phone"
             >
               <Phone className="h-5 w-5" />
-              <span>+91 22 1234 5678</span>
+              <span>91-11-45040303</span>
             </a>
             <a
-              href="mailto:contact@wadhwa-law.com"
+              href="mailto:delhi@wadhwalawgroup.com"
               className="flex items-center gap-2 hover:text-gold transition-colors"
               data-testid="link-cta-email"
             >
               <Mail className="h-5 w-5" />
-              <span>contact@wadhwa-law.com</span>
+              <span>delhi@wadhwalawgroup.com</span>
             </a>
           </div>
         </div>

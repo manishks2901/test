@@ -35,6 +35,10 @@ export default function InsightDetail() {
   });
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [slug]);
+
+  useEffect(() => {
     if (post && post.id && !viewRecorded.current) {
       viewRecorded.current = true;
       recordViewMutation.mutate(post.id);

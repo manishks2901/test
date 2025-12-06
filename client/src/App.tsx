@@ -8,13 +8,8 @@ import { useAuth } from "@/hooks/useAuth";
 import { Scale } from "lucide-react";
 
 import Landing from "@/pages/Landing";
-import Services from "@/pages/Services";
 import PracticeAreaDetail from "@/pages/PracticeAreaDetail";
-import Team from "@/pages/Team";
-import Insights from "@/pages/Insights";
 import InsightDetail from "@/pages/InsightDetail";
-import Contact from "@/pages/Contact";
-import NotFound from "@/pages/not-found";
 
 import Dashboard from "@/pages/admin/Dashboard";
 import Posts from "@/pages/admin/Posts";
@@ -50,13 +45,13 @@ function ProtectedRoute({ component: Component }: { component: React.ComponentTy
 function Router() {
   return (
     <Switch>
-      <Route path="/" component={Landing} />
-      <Route path="/services" component={Services} />
-      <Route path="/services/:slug" component={PracticeAreaDetail} />
-      <Route path="/team" component={Team} />
-      <Route path="/insights" component={Insights} />
-      <Route path="/insights/:slug" component={InsightDetail} />
-      <Route path="/contact" component={Contact} />
+      <Route path="/" component={() => <Landing />} />
+      <Route path="/services" component={() => <Landing />} />
+      <Route path="/services/:slug" component={() => <PracticeAreaDetail />} />
+      <Route path="/team" component={() => <Landing />} />
+      <Route path="/insights" component={() => <Landing />} />
+      <Route path="/insights/:slug" component={() => <InsightDetail />} />
+      <Route path="/contact" component={() => <Landing />} />
       
       <Route path="/admin">
         {() => <ProtectedRoute component={Dashboard} />}
@@ -86,7 +81,7 @@ function Router() {
         {() => <ProtectedRoute component={Subscribers} />}
       </Route>
       
-      <Route component={NotFound} />
+      <Route component={() => <Landing />} />
     </Switch>
   );
 }

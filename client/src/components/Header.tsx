@@ -1,54 +1,79 @@
-import { Link, useLocation } from "wouter";
-import { Menu, X, Scale } from "lucide-react";
-import { useState } from "react";
+import { Link } from "wouter";
+import { Menu, X } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { useAuth } from "@/hooks/useAuth";
 
 const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/services", label: "Services" },
-  { href: "/team", label: "Our Team" },
-  { href: "/insights", label: "Insights" },
-  { href: "/contact", label: "Contact" },
+  { href: "#home", label: "Home", id: "home" },
+  { href: "#services", label: "Practice Areas", id: "services" },
+  { href: "#team", label: "Our Team", id: "team" },
+  { href: "#insights", label: "Insights", id: "insights" },
+  { href: "#contact", label: "Contact", id: "contact" },
 ];
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [location] = useLocation();
+  const [activeSection, setActiveSection] = useState<string>("home");
   const { isAuthenticated, user } = useAuth();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPos = window.scrollY + 160;
+      let current = "home";
+
+      navLinks.forEach((link) => {
+        const el = document.getElementById(link.id);
+        if (el && scrollPos >= el.offsetTop) {
+          current = link.id;
+        }
+      });
+
+      setActiveSection(current);
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto px-4 md:px-8 lg:px-12">
         <div className="flex h-16 md:h-20 items-center justify-between">
           <Link href="/" className="flex items-center gap-2" data-testid="link-logo">
-            <Scale className="h-7 w-7 text-gold" />
+            <img
+              src="/logo.png"
+              alt="Wadhwa & Co. logo"
+              className="h-14 w-auto drop-shadow-sm"
+              loading="lazy"
+            />
             <div className="flex flex-col">
               <span className="font-serif text-lg font-bold tracking-tight text-primary">
                 Wadhwa & Co.
               </span>
               <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground hidden sm:block">
-                Advocates & Solicitors
+                Advocates & Legal Consultants
               </span>
             </div>
           </Link>
 
           <nav className="hidden lg:flex items-center gap-1">
             {navLinks.map((link) => (
-              <Link key={link.href} href={link.href}>
+              <a key={link.href} href={link.href}>
                 <Button
                   variant="ghost"
                   className={`font-sans text-sm ${
-                    location === link.href
+                    activeSection === link.id
                       ? "text-gold"
-                      : "text-foreground/80"
+                      : "text-foreground/80 hover:text-gold"
                   }`}
                   data-testid={`link-nav-${link.label.toLowerCase().replace(/\s/g, '-')}`}
                 >
                   {link.label}
                 </Button>
-              </Link>
+              </a>
             ))}
           </nav>
 
@@ -96,20 +121,20 @@ export function Header() {
           <div className="lg:hidden border-t border-border py-4 animate-fade-in">
             <nav className="flex flex-col gap-1">
               {navLinks.map((link) => (
-                <Link key={link.href} href={link.href}>
+                <a key={link.href} href={link.href}>
                   <Button
                     variant="ghost"
                     className={`w-full justify-start font-sans ${
-                      location === link.href
+                      activeSection === link.id
                         ? "text-gold bg-accent"
-                        : "text-foreground/80"
+                        : "text-foreground/80 hover:text-gold"
                     }`}
                     onClick={() => setMobileMenuOpen(false)}
                     data-testid={`link-mobile-nav-${link.label.toLowerCase().replace(/\s/g, '-')}`}
                   >
                     {link.label}
                   </Button>
-                </Link>
+                </a>
               ))}
               
               <div className="border-t border-border mt-2 pt-2">
