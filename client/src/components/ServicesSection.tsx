@@ -11,13 +11,13 @@ export function ServicesSection() {
       <div className="container mx-auto px-4 md:px-8 lg:px-12">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <span className="inline-block text-gold font-semibold text-sm uppercase tracking-wider mb-4">
-            Our Expertise
+            Practice Areas
           </span>
           <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-6">
             Practice Areas
           </h2>
           <p className="text-muted-foreground text-lg leading-relaxed">
-            We provide comprehensive legal solutions across diverse practice areas, 
+            We provide comprehensive legal solutions across diverse practice areas,
             combining deep expertise with a client-focused approach.
           </p>
         </div>
@@ -58,7 +58,7 @@ export function ServicesSection() {
         <div className="text-center mt-12">
           <Link href="/services">
             <Button size="lg" variant="outline" data-testid="button-view-all-services">
-              View All Services
+              View All Practice Areas
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </Link>

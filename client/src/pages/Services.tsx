@@ -21,13 +21,13 @@ export default function Services() {
           <div className="container mx-auto px-4 md:px-8 lg:px-12">
             <div className="max-w-3xl">
               <span className="inline-block text-gold font-semibold text-sm uppercase tracking-wider mb-4">
-                Our Services
+                Practice Areas
               </span>
               <h1 className="font-serif text-4xl md:text-5xl font-bold text-primary-foreground mb-6">
                 Comprehensive Legal Solutions
               </h1>
               <p className="text-lg text-primary-foreground/80 leading-relaxed">
-                We offer a full spectrum of legal services, combining deep expertise 
+                We offer a full spectrum of legal services, combining deep expertise
                 with a client-focused approach to deliver exceptional outcomes.
               </p>
             </div>
@@ -106,7 +106,7 @@ export default function Services() {
                       </div>
                       <div className="p-8 md:p-10 md:col-span-2">
                         <h3 className="font-semibold text-foreground mb-6">
-                          Our Services Include:
+                          What We Offer:
                         </h3>
                         <div className="grid sm:grid-cols-2 gap-4 mb-8">
                           {service.services.map((detail) => (
@@ -156,7 +156,7 @@ export default function Services() {
               Need Legal Assistance?
             </h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-8">
-              Contact us today to discuss your legal requirements and learn how 
+              Contact us today to discuss your legal requirements and learn how
               our team can help protect your interests.
             </p>
             <Link href="/contact">

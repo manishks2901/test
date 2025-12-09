@@ -44,15 +44,38 @@ Update the system:
 apt update && apt upgrade -y
 ```
 
-Install Node.js 20 (LTS):
+Install Node.js (Choose one option):
+
+**Option A: Node.js 22.x (Latest - Matches Local Development)**
+```bash
+curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
+apt install -y nodejs
+```
+
+**Option B: Node.js 20.x (LTS - Recommended for Production Stability)**
 ```bash
 curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
 apt install -y nodejs
 ```
 
+**Option C: Use NVM for Version Management (Most Flexible)**
+```bash
+# Install NVM
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+
+# Load NVM
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+# Install Node.js 22 (or any version)
+nvm install 22
+nvm use 22
+nvm alias default 22
+```
+
 Verify installation:
 ```bash
-node --version
+node --version  # Should show v22.x.x or v20.x.x
 npm --version
 ```
 

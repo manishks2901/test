@@ -62,7 +62,7 @@ export default function PracticeAreaDetail() {
             <Link href="/services">
               <Button data-testid="button-back-to-services">
                 <ArrowLeft className="mr-2 h-4 w-4" />
-                Back to Services
+                Back to Practice Areas
               </Button>
             </Link>
           </div>
@@ -100,7 +100,7 @@ export default function PracticeAreaDetail() {
                 data-testid="button-back"
               >
                 <ArrowLeft className="mr-2 h-4 w-4" />
-                Back to Services
+                Back to Practice Areas
               </Button>
             </Link>
             <div className="flex items-start gap-6">
@@ -134,7 +134,7 @@ export default function PracticeAreaDetail() {
 
                 <div className="mt-12">
                   <h2 className="font-serif text-2xl font-bold text-foreground mb-6">
-                    Our Services
+                    What We Offer
                   </h2>
                   <div className="grid sm:grid-cols-2 gap-4">
                     {practiceArea.services.map((service) => (

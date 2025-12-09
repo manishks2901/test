@@ -321,16 +321,17 @@ export function ContactSection() {
           </div>
         </div>
 
-        <section className="h-[400px] bg-muted mt-12">
-          <div className="w-full h-full bg-gradient-to-br from-primary/5 to-gold/5 flex items-center justify-center">
-            <div className="text-center">
-              <MapPin className="h-12 w-12 text-gold/50 mx-auto mb-4" />
-              <p className="text-muted-foreground">Map placeholder</p>
-              <p className="text-sm text-muted-foreground">
-                C-104, Third Floor, Lajpat Nagar Part - I, New Delhi - 110024
-              </p>
-            </div>
-          </div>
+        <section className="h-[450px] bg-muted mt-12 rounded-lg overflow-hidden">
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1977.688342435817!2d77.23767248446768!3d28.578029199999992!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce3001a6995a7%3A0xe6784bc6f8073019!2sArt%20win%20shop!5e1!3m2!1sen!2sin!4v1765273109603!5m2!1sen!2sin" 
+            width="100%" 
+            height="100%" 
+            style={{ border: 0 }} 
+            allowFullScreen={true}
+            loading="lazy" 
+            referrerPolicy="no-referrer-when-downgrade"
+            title="Wadhwa & Co. Office Location"
+          />
         </section>
       </div>
     </section>

@@ -5,7 +5,7 @@ import { NewsletterSignup } from "./NewsletterSignup";
 import { practiceAreaTitles } from "@/lib/practiceAreas";
 
 const quickLinks = [
-  { href: "/services", label: "Our Services" },
+  { href: "/services", label: "Practice Areas" },
   { href: "/team", label: "Our Team" },
   { href: "/insights", label: "Insights" },
   { href: "/contact", label: "Contact Us" },
@@ -32,7 +32,7 @@ export function Footer() {
               </div>
             </div>
             <p className="text-sm text-primary-foreground/80 leading-relaxed">
-              Providing bespoke legal solutions with integrity, precision, and a 
+              Providing bespoke legal solutions with integrity, precision, and a
               commitment to delivering the right outcomes for our clients.
             </p>
             <div className="flex gap-2">
