@@ -8,6 +8,11 @@ import memoize from "memoizee";
 import connectPg from "connect-pg-simple";
 import { storage } from "./storage";
 
+const useLocalAuth =
+  process.env.ENABLE_LOCAL_AUTH === "true" ||
+  !process.env.REPL_ID ||
+  process.env.REPL_ID === "your-replit-app-id";
+
 const getOidcConfig = memoize(
   async () => {
     return await client.discovery(
@@ -20,6 +25,7 @@ const getOidcConfig = memoize(
 
 export function getSession() {
   const sessionTtl = 7 * 24 * 60 * 60 * 1000; // 1 week
+  const isProduction = process.env.NODE_ENV === "production";
   const pgStore = connectPg(session);
   const sessionStore = new pgStore({
     conString: process.env.DATABASE_URL,
@@ -34,7 +40,8 @@ export function getSession() {
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
-      secure: true,
+      // Allow HTTP cookies in local development so sessions persist
+      secure: isProduction,
       maxAge: sessionTtl,
     },
   });
@@ -66,6 +73,43 @@ export async function setupAuth(app: Express) {
   app.use(passport.initialize());
   app.use(passport.session());
 
+  passport.serializeUser((user: Express.User, cb) => cb(null, user));
+  passport.deserializeUser((user: Express.User, cb) => cb(null, user));
+
+  if (useLocalAuth) {
+    app.get("/api/login", async (req, res) => {
+      const claims: any = {
+        sub: process.env.LOCAL_ADMIN_ID ?? "local-admin",
+        email: process.env.LOCAL_ADMIN_EMAIL ?? "admin@example.com",
+        first_name: "Local",
+        last_name: "Admin",
+      };
+
+      await upsertUser(claims);
+
+      const user = {
+        claims,
+        expires_at: Math.floor(Date.now() / 1000) + 7 * 24 * 60 * 60,
+      };
+
+      req.login(user, (err) => {
+        if (err) {
+          console.error("Local login failed:", err);
+          return res.status(500).json({ message: "Login failed" });
+        }
+        res.redirect("/");
+      });
+    });
+
+    app.get("/api/callback", (_req, res) => res.redirect("/"));
+
+    app.get("/api/logout", (req, res) => {
+      req.logout(() => res.redirect("/"));
+    });
+
+    return;
+  }
+
   const config = await getOidcConfig();
 
   const verify: VerifyFunction = async (
@@ -83,12 +127,15 @@ export async function setupAuth(app: Express) {
   const ensureStrategy = (domain: string) => {
     const strategyName = `replitauth:${domain}`;
     if (!registeredStrategies.has(strategyName)) {
+      const callbackProtocol =
+        process.env.AUTH_CALLBACK_PROTOCOL ??
+        (process.env.NODE_ENV === "production" ? "https" : "http");
       const strategy = new Strategy(
         {
           name: strategyName,
           config,
           scope: "openid email profile offline_access",
-          callbackURL: `https://${domain}/api/callback`,
+          callbackURL: `${callbackProtocol}://${domain}/api/callback`,
         },
         verify,
       );
@@ -96,9 +143,6 @@ export async function setupAuth(app: Express) {
       registeredStrategies.add(strategyName);
     }
   };
-
-  passport.serializeUser((user: Express.User, cb) => cb(null, user));
-  passport.deserializeUser((user: Express.User, cb) => cb(null, user));
 
   app.get("/api/login", (req, res, next) => {
     ensureStrategy(req.hostname);
@@ -138,6 +182,10 @@ export const isAuthenticated: RequestHandler = async (req, res, next) => {
   const now = Math.floor(Date.now() / 1000);
   if (now <= user.expires_at) {
     return next();
+  }
+
+  if (useLocalAuth) {
+    return res.status(401).json({ message: "Unauthorized" });
   }
 
   const refreshToken = user.refresh_token;
