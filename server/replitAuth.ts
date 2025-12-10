@@ -25,7 +25,12 @@ const getOidcConfig = memoize(
 
 export function getSession() {
   const sessionTtl = 7 * 24 * 60 * 60 * 1000; // 1 week
-  const isProduction = process.env.NODE_ENV === "production";
+  const cookieSecure =
+    process.env.COOKIE_SECURE === "true"
+      ? true
+      : process.env.COOKIE_SECURE === "false"
+        ? false
+        : "auto"; // auto: secure on HTTPS, not on HTTP (works with trust proxy)
   const pgStore = connectPg(session);
   const sessionStore = new pgStore({
     conString: process.env.DATABASE_URL,
@@ -40,8 +45,8 @@ export function getSession() {
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
-      // Allow HTTP cookies in local development so sessions persist
-      secure: isProduction,
+      secure: cookieSecure,
+      sameSite: "lax",
       maxAge: sessionTtl,
     },
   });
