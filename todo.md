@@ -1,0 +1,20 @@
+- [x] Arrange all practice areas in alphabetical order.
+- [x] List Arbitration as its own practice area (not under Dispute Resolution).
+- [x] Add Insolvency & Bankruptcy as a separate practice area.
+- [x] Add Mergers & Acquisitions as a practice area.
+- [x] Add Private Equity as a practice area.
+- [x] Add Pro Bono as a practice area.
+- [x] Add Criminal Law as a practice area.
+- [x] Add Noida office address: Tower 1-1702, Aceparkway, Sector 150, Noida - 201306.
+- [x] Add Chandigarh office address: Sector 18-D, Chandigarh.
+- [ ] Add updated contact numbers (replacing +91-11-45040303 and +91-11-41650303).
+- [ ] Add an About Us tab and sync content from the old website with the new data.
+- [x] Remove "Our Team" from the Home page and keep it as a separate tab.
+- [x] Update team profile: Khushboo Garg (based in Chandigarh; consumer practice, matrimonial matters, real estate).
+- [x] Update team profile: Paras Malik (criminal law practice).
+- [x] Update office hours to Monday-Saturday: 10:30 AM - 9:00 PM.
+- [x] Ensure the mobile version matches the desktop site content/structure.
+- [x] Check and correct the "AI big dash" in the content.
+- [x] Fix the "Request a Free Consultation" tab not working.
+- [x] Fix the "Practice Areas" tab not working.
+- [x] Show the BCI disclaimer on every website opening.

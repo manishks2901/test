@@ -5,6 +5,7 @@ import { NewsletterSignup } from "./NewsletterSignup";
 import { practiceAreaTitles } from "@/lib/practiceAreas";
 
 const quickLinks = [
+  { href: "/about", label: "About Us" },
   { href: "/services", label: "Practice Areas" },
   { href: "/team", label: "Our Team" },
   { href: "/insights", label: "Insights" },
@@ -94,9 +95,10 @@ export function Footer() {
               <li className="flex items-start gap-3">
                 <MapPin className="h-5 w-5 text-gold shrink-0 mt-0.5" />
                 <span className="text-sm text-primary-foreground/80">
-                  C-104, Third Floor, Lajpat Nagar Part - I<br />
-                  Opposite Defence Colony Flyover<br />
-                  New Delhi - 110024
+                  New Delhi Office: C-104, Third Floor, Lajpat Nagar Part - I<br />
+                  Opposite Defence Colony Flyover, New Delhi - 110024<br />
+                  Noida Office: Tower 1-1702, Aceparkway, Sector 150, Noida - 201306<br />
+                  Chandigarh Office: Sector 18-D, Chandigarh
                 </span>
               </li>
               <li className="flex items-center gap-3">

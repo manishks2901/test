@@ -2,8 +2,13 @@ import type { LucideIcon } from "lucide-react";
 import {
   Banknote,
   Briefcase,
+  Building2,
   Calculator,
+  Coins,
   Gavel,
+  HandCoins,
+  Handshake,
+  HeartHandshake,
   Home,
   Landmark,
   Layers,
@@ -28,148 +33,28 @@ export type PracticeArea = {
 
 export const practiceAreas: PracticeArea[] = [
   {
-    id: "family-law",
+    id: "arbitration",
     icon: Gavel,
-    title: "Family Law",
-    subtitle: "Personal Matters",
+    title: "Arbitration",
+    subtitle: "Domestic & International",
     description:
-      "Sensitive counsel across matrimonial, guardianship, succession, and estate-related matters.",
+      "Strategic arbitration representation for complex domestic and international disputes.",
     fullDescription:
-      "Our Family Law practice offers discreet and compassionate representation for sensitive personal matters. We combine strategic guidance with empathy to help clients navigate complex family dynamics while protecting their rights and interests.",
+      "Our arbitration team handles commercial disputes under institutional and ad hoc rules. We support clients from drafting arbitration clauses to award enforcement, with a focus on efficient timelines and enforceable outcomes.",
     services: [
-      "Divorce and separation proceedings",
-      "Child custody and guardianship",
-      "Domestic violence protection",
-      "Maintenance and alimony",
-      "Adoption and surrogacy",
-      "Inheritance and succession advisory",
-    ],
-    keyBenefits: [
-      "Balanced representation for negotiated and contested matters",
-      "Confidential handling of sensitive issues",
-      "Holistic planning for family assets and succession",
-    ],
-    relatedCategories: ["family", "custody", "succession"],
-  },
-  {
-    id: "litigation-dispute-resolution",
-    icon: Scale,
-    title: "Dispute Resolution",
-    subtitle: "Strategy & Advocacy",
-    description:
-      "Courtroom and arbitration advocacy with pragmatic strategies to resolve complex disputes.",
-    fullDescription:
-      "We handle high-stakes disputes with meticulous preparation, clear strategy, and focused advocacy. From pre-litigation assessments to trials and arbitration, we prioritize outcomes that align with our clients' business and personal goals.",
-    services: [
-      "Commercial and civil litigation",
       "Domestic and international arbitration",
-      "Mediation and negotiated settlements",
-      "Appellate strategy and filings",
-      "Interim reliefs and injunctions",
-      "Pre-litigation risk assessments",
+      "Arbitration clause drafting and review",
+      "Institutional and ad hoc proceedings",
+      "Interim measures and emergency relief",
+      "Award enforcement and challenges",
+      "Arbitrator appointment support",
     ],
     keyBenefits: [
-      "End-to-end dispute strategy and execution",
-      "Experience across courts and tribunals",
-      "Outcome-focused and cost-aware approach",
+      "Structured case strategy from notice to award",
+      "Experience with institutional rules and procedures",
+      "Outcome-focused approach with enforceability in mind",
     ],
-    relatedCategories: ["litigation", "arbitration", "disputes"],
-  },
-  {
-    id: "criminal-law",
-    icon: Shield,
-    title: "Criminal Law",
-    subtitle: "Defense & Compliance",
-    description:
-      "Robust defense and advisory support across white-collar, economic, and general criminal matters.",
-    fullDescription:
-      "Our team defends and advises clients in criminal investigations and prosecutions, with particular focus on white-collar and economic offences. We guide clients through every procedural stage with measured strategy.",
-    services: [
-      "White-collar and economic offences",
-      "Anticipatory and regular bail",
-      "Trial strategy and defense",
-      "Internal investigations",
-      "Regulatory liaison and compliance",
-      "Appeals and revisions",
-    ],
-    keyBenefits: [
-      "Swift response in urgent matters",
-      "Coordinated defense across forums",
-      "Clear guidance on regulatory exposure",
-    ],
-    relatedCategories: ["criminal", "white-collar", "regulatory"],
-  },
-  {
-    id: "intellectual-property",
-    icon: Lightbulb,
-    title: "Intellectual Property",
-    subtitle: "Innovation Protection",
-    description:
-      "Protection, enforcement, and commercialization of IP portfolios across industries.",
-    fullDescription:
-      "We protect, enforce, and commercialize intellectual property assets through thoughtful strategy and precise execution. Our counsel spans portfolio development, licensing, and contentious enforcement.",
-    services: [
-      "Trademark and copyright protection",
-      "Patent filing coordination",
-      "Trade secret protection programs",
-      "IP licensing and technology transfer",
-      "Opposition and enforcement actions",
-      "IP due diligence for transactions",
-    ],
-    keyBenefits: [
-      "Lifecycle support from filing to enforcement",
-      "Commercial focus for monetization",
-      "Cross-industry experience",
-    ],
-    relatedCategories: ["ip", "technology", "licensing"],
-  },
-  {
-    id: "real-estate-property-law",
-    icon: Home,
-    title: "Real Estate and Property Law",
-    subtitle: "Transactions & Disputes",
-    description:
-      "End-to-end support for property acquisitions, development, leasing, and contentious matters.",
-    fullDescription:
-      "We advise on all aspects of real estate transactions and disputes, combining meticulous diligence with practical negotiation. Our team supports developers, investors, and individuals across residential and commercial assets.",
-    services: [
-      "Title due diligence and risk mapping",
-      "Property acquisitions and sales",
-      "Development and redevelopment projects",
-      "Commercial and residential leasing",
-      "RERA and regulatory approvals",
-      "Property dispute resolution",
-    ],
-    keyBenefits: [
-      "Practical guidance across the asset lifecycle",
-      "Experience in contested and uncontested matters",
-      "Regulatory navigation and compliance",
-    ],
-    relatedCategories: ["real-estate", "property", "rera"],
-  },
-  {
-    id: "taxation-finance",
-    icon: Calculator,
-    title: "Taxation and Finance",
-    subtitle: "Strategic Advisory",
-    description:
-      "Tax-efficient structuring, compliance, and representation before authorities and tribunals.",
-    fullDescription:
-      "Our tax practice combines strategic structuring with hands-on representation in disputes. We help clients stay compliant, reduce exposure, and resolve assessments effectively.",
-    services: [
-      "Direct and indirect tax advisory",
-      "Transaction structuring",
-      "GST and withholding compliance",
-      "Tax controversy and litigation",
-      "Advance ruling and appellate support",
-      "Cross-border taxation guidance",
-    ],
-    keyBenefits: [
-      "Forward-looking tax planning",
-      "Coordinated defense in audits and disputes",
-      "Sector-aware compliance programs",
-    ],
-    relatedCategories: ["tax", "finance", "compliance"],
+    relatedCategories: ["arbitration", "tribunals", "awards"],
   },
   {
     id: "banking-finance",
@@ -244,6 +129,54 @@ export const practiceAreas: PracticeArea[] = [
     relatedCategories: ["commercial", "contracts", "operations"],
   },
   {
+    id: "criminal-law",
+    icon: Shield,
+    title: "Criminal Law",
+    subtitle: "Defense & Compliance",
+    description:
+      "Robust defense and advisory support across white-collar, economic, and general criminal matters.",
+    fullDescription:
+      "Our team defends and advises clients in criminal investigations and prosecutions, with particular focus on white-collar and economic offences. We guide clients through every procedural stage with measured strategy.",
+    services: [
+      "White-collar and economic offences",
+      "Anticipatory and regular bail",
+      "Trial strategy and defense",
+      "Internal investigations",
+      "Regulatory liaison and compliance",
+      "Appeals and revisions",
+    ],
+    keyBenefits: [
+      "Swift response in urgent matters",
+      "Coordinated defense across forums",
+      "Clear guidance on regulatory exposure",
+    ],
+    relatedCategories: ["criminal", "white-collar", "regulatory"],
+  },
+  {
+    id: "litigation-dispute-resolution",
+    icon: Scale,
+    title: "Dispute Resolution",
+    subtitle: "Strategy & Negotiation",
+    description:
+      "Strategic negotiation, mediation, and advisory support to resolve complex disputes efficiently.",
+    fullDescription:
+      "We handle high-stakes disputes with meticulous preparation, clear strategy, and focused advocacy. From pre-litigation assessments to mediation and settlement, we prioritize outcomes that align with our clients' business and personal goals.",
+    services: [
+      "Pre-litigation risk assessments",
+      "Mediation and conciliation",
+      "Negotiated settlements",
+      "Dispute strategy and case management",
+      "Interim reliefs and injunction strategy",
+      "Settlement documentation and enforcement",
+    ],
+    keyBenefits: [
+      "End-to-end dispute strategy and execution",
+      "Outcome-focused and cost-aware approach",
+      "Practical guidance to avoid protracted litigation",
+    ],
+    relatedCategories: ["dispute-resolution", "mediation", "settlement"],
+  },
+  {
     id: "employment",
     icon: Users,
     title: "Employment",
@@ -266,6 +199,174 @@ export const practiceAreas: PracticeArea[] = [
       "Proactive compliance programs",
     ],
     relatedCategories: ["employment", "labor", "workplace"],
+  },
+  {
+    id: "family-law",
+    icon: HeartHandshake,
+    title: "Family Law",
+    subtitle: "Personal Matters",
+    description:
+      "Sensitive counsel across matrimonial, guardianship, succession, and estate-related matters.",
+    fullDescription:
+      "Our Family Law practice offers discreet and compassionate representation for sensitive personal matters. We combine strategic guidance with empathy to help clients navigate complex family dynamics while protecting their rights and interests.",
+    services: [
+      "Divorce and separation proceedings",
+      "Child custody and guardianship",
+      "Domestic violence protection",
+      "Maintenance and alimony",
+      "Adoption and surrogacy",
+      "Inheritance and succession advisory",
+    ],
+    keyBenefits: [
+      "Balanced representation for negotiated and contested matters",
+      "Confidential handling of sensitive issues",
+      "Holistic planning for family assets and succession",
+    ],
+    relatedCategories: ["family", "custody", "succession"],
+  },
+  {
+    id: "insolvency-bankruptcy",
+    icon: Building2,
+    title: "Insolvency & Bankruptcy",
+    subtitle: "Resolution & Restructuring",
+    description:
+      "Advisory and representation for creditors, debtors, and resolution professionals.",
+    fullDescription:
+      "We guide stakeholders through the Insolvency and Bankruptcy Code process, from pre-insolvency advisory to resolution and liquidation. Our team supports strategy, documentation, and advocacy before the NCLT and NCLAT.",
+    services: [
+      "CIRP strategy and advisory",
+      "Representation before NCLT and NCLAT",
+      "Creditor committee support",
+      "Debt restructuring and workouts",
+      "Liquidation and asset recovery",
+      "Distressed asset transactions",
+    ],
+    keyBenefits: [
+      "Practical guidance through time-bound processes",
+      "Coordinated creditor and debtor strategies",
+      "Experience in restructuring and recovery",
+    ],
+    relatedCategories: ["insolvency", "bankruptcy", "restructuring"],
+  },
+  {
+    id: "intellectual-property",
+    icon: Lightbulb,
+    title: "Intellectual Property",
+    subtitle: "Innovation Protection",
+    description:
+      "Protection, enforcement, and commercialization of IP portfolios across industries.",
+    fullDescription:
+      "We protect, enforce, and commercialize intellectual property assets through thoughtful strategy and precise execution. Our counsel spans portfolio development, licensing, and contentious enforcement.",
+    services: [
+      "Trademark and copyright protection",
+      "Patent filing coordination",
+      "Trade secret protection programs",
+      "IP licensing and technology transfer",
+      "Opposition and enforcement actions",
+      "IP due diligence for transactions",
+    ],
+    keyBenefits: [
+      "Lifecycle support from filing to enforcement",
+      "Commercial focus for monetization",
+      "Cross-industry experience",
+    ],
+    relatedCategories: ["ip", "technology", "licensing"],
+  },
+  {
+    id: "litigation",
+    icon: Landmark,
+    title: "Litigation",
+    subtitle: "Commercial & Civil",
+    description:
+      "Representation in commercial and civil litigation across courts and tribunals.",
+    fullDescription:
+      "Beyond commercial disputes, we represent clients in civil suits, writ petitions, and appellate matters. Our approach blends rigorous research with persuasive advocacy tailored to each forum.",
+    services: [
+      "Commercial and civil litigation",
+      "Civil suits and injunctions",
+      "Writ petitions and constitutional challenges",
+      "Service law matters",
+      "Consumer disputes",
+      "Appellate and review proceedings",
+    ],
+    keyBenefits: [
+      "Forum-specific advocacy experience",
+      "Research-driven pleadings and strategy",
+      "Clarity on timelines and procedural pathways",
+    ],
+    relatedCategories: ["litigation", "civil", "writs"],
+  },
+  {
+    id: "mergers-acquisitions",
+    icon: Handshake,
+    title: "Mergers & Acquisitions",
+    subtitle: "Deals & Integration",
+    description:
+      "End-to-end support for acquisitions, mergers, and strategic transactions.",
+    fullDescription:
+      "We advise on transaction structuring, due diligence, documentation, and post-closing integration for mergers and acquisitions. Our focus is on delivering clear deal outcomes with managed risk.",
+    services: [
+      "Buy-side and sell-side advisory",
+      "Due diligence and risk assessments",
+      "Share purchase and asset purchase agreements",
+      "Regulatory approvals and filings",
+      "Deal structuring and tax coordination",
+      "Post-transaction integration support",
+    ],
+    keyBenefits: [
+      "Balanced commercial and legal risk assessment",
+      "Negotiation support across transaction stages",
+      "Clear pathways to closing and integration",
+    ],
+    relatedCategories: ["m&a", "transactions", "corporate"],
+  },
+  {
+    id: "private-equity",
+    icon: Coins,
+    title: "Private Equity",
+    subtitle: "Investments & Exits",
+    description:
+      "Counsel for funds and investors on investments, governance, and exits.",
+    fullDescription:
+      "We advise private equity funds, family offices, and strategic investors on investments and portfolio management. Our support spans term sheets, shareholder arrangements, and exit strategies.",
+    services: [
+      "Fund formation and structuring",
+      "Term sheets and investment documentation",
+      "Shareholders agreements and governance",
+      "Regulatory compliance and reporting",
+      "Exit strategies and secondary sales",
+      "Portfolio company advisory",
+    ],
+    keyBenefits: [
+      "Deal support aligned to investment objectives",
+      "Practical governance and compliance guidance",
+      "Focus on efficient and value-driven exits",
+    ],
+    relatedCategories: ["private-equity", "investments", "funds"],
+  },
+  {
+    id: "pro-bono",
+    icon: HandCoins,
+    title: "Pro Bono",
+    subtitle: "Community Impact",
+    description:
+      "Pro bono support for deserving matters and access-to-justice initiatives.",
+    fullDescription:
+      "We devote resources to pro bono matters, supporting NGOs and individuals with representation and advisory services. Our work focuses on access to justice, community impact, and responsible advocacy.",
+    services: [
+      "Legal aid and representation",
+      "NGO advisory and compliance",
+      "Documentation and filings",
+      "Public interest research",
+      "Workshops and awareness initiatives",
+      "Strategic litigation support",
+    ],
+    keyBenefits: [
+      "Commitment to access-to-justice initiatives",
+      "Experienced attorneys contributing time and expertise",
+      "Responsible advocacy with measurable impact",
+    ],
+    relatedCategories: ["pro-bono", "legal-aid", "community"],
   },
   {
     id: "property",
@@ -292,28 +393,52 @@ export const practiceAreas: PracticeArea[] = [
     relatedCategories: ["property", "title", "possession"],
   },
   {
-    id: "litigation",
-    icon: Landmark,
-    title: "Litigation",
-    subtitle: "Civil & Writs",
+    id: "real-estate-property-law",
+    icon: Home,
+    title: "Real Estate and Property Law",
+    subtitle: "Transactions & Disputes",
     description:
-      "Representation in civil, constitutional, and appellate litigation across forums.",
+      "End-to-end support for property acquisitions, development, leasing, and contentious matters.",
     fullDescription:
-      "Beyond commercial disputes, we represent clients in civil suits, writ petitions, and appellate matters. Our approach blends rigorous research with persuasive advocacy tailored to each forum.",
+      "We advise on all aspects of real estate transactions and disputes, combining meticulous diligence with practical negotiation. Our team supports developers, investors, and individuals across residential and commercial assets.",
     services: [
-      "Civil suits and injunctions",
-      "Writ petitions and constitutional challenges",
-      "Service law matters",
-      "Consumer disputes",
-      "Appellate and review proceedings",
-      "Advisory on enforcement of decrees",
+      "Title due diligence and risk mapping",
+      "Property acquisitions and sales",
+      "Development and redevelopment projects",
+      "Commercial and residential leasing",
+      "RERA and regulatory approvals",
+      "Property dispute resolution",
     ],
     keyBenefits: [
-      "Forum-specific advocacy experience",
-      "Research-driven pleadings and strategy",
-      "Clarity on timelines and procedural pathways",
+      "Practical guidance across the asset lifecycle",
+      "Experience in contested and uncontested matters",
+      "Regulatory navigation and compliance",
     ],
-    relatedCategories: ["litigation", "civil", "writs"],
+    relatedCategories: ["real-estate", "property", "rera"],
+  },
+  {
+    id: "taxation-finance",
+    icon: Calculator,
+    title: "Taxation and Finance",
+    subtitle: "Strategic Advisory",
+    description:
+      "Tax-efficient structuring, compliance, and representation before authorities and tribunals.",
+    fullDescription:
+      "Our tax practice combines strategic structuring with hands-on representation in disputes. We help clients stay compliant, reduce exposure, and resolve assessments effectively.",
+    services: [
+      "Direct and indirect tax advisory",
+      "Transaction structuring",
+      "GST and withholding compliance",
+      "Tax controversy and litigation",
+      "Advance ruling and appellate support",
+      "Cross-border taxation guidance",
+    ],
+    keyBenefits: [
+      "Forward-looking tax planning",
+      "Coordinated defense in audits and disputes",
+      "Sector-aware compliance programs",
+    ],
+    relatedCategories: ["tax", "finance", "compliance"],
   },
 ];
 

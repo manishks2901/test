@@ -32,8 +32,8 @@ export function HeroSection() {
             style={{ animationDelay: "0.25s" }}
           >
             Our firm delivers refined legal craftsmanship backed by deep subject-matter mastery. We focus on offering highly personalised
-            solutions, meticulous legal analysis, and strategic representation for clients who demand the highest standards. Every matter—big or
-            small—receives the same level of care, rigor, and professional excellence. When you choose us, you choose a partner whose expertise
+            solutions, meticulous legal analysis, and strategic representation for clients who demand the highest standards. Every matter, big or
+            small, receives the same level of care, rigor, and professional excellence. When you choose us, you choose a partner whose expertise
             you can trust and whose outcomes you can rely on.
           </p>
 

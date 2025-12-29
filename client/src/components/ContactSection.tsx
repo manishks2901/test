@@ -51,9 +51,10 @@ const contactInfo = [
     icon: MapPin,
     title: "Address",
     details: [
-      "C-104, Third Floor, Lajpat Nagar Part - I",
-      "Opposite Defence Colony Flyover",
-      "New Delhi - 110024",
+      "New Delhi Office: C-104, Third Floor, Lajpat Nagar Part - I",
+      "Opposite Defence Colony Flyover, New Delhi - 110024",
+      "Noida Office: Tower 1-1702, Aceparkway, Sector 150, Noida - 201306",
+      "Chandigarh Office: Sector 18-D, Chandigarh",
     ],
   },
   {
@@ -69,7 +70,7 @@ const contactInfo = [
   {
     icon: Clock,
     title: "Office Hours",
-    details: ["Monday - Friday: 9:00 AM - 6:00 PM", "Saturday: 10:00 AM - 2:00 PM"],
+    details: ["Monday - Saturday: 10:30 AM - 9:00 PM"],
   },
 ];
 

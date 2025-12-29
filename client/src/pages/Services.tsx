@@ -12,8 +12,8 @@ export default function Services() {
     <div className="min-h-screen flex flex-col">
       <SEO
         title="Legal Services & Practice Areas"
-        description="Explore our comprehensive legal services across family law, dispute resolution, criminal law, intellectual property, real estate, taxation, banking and finance, capital markets, commercial, and employment matters."
-        keywords="legal services, family law, litigation, dispute resolution, criminal law, intellectual property, real estate, taxation, banking and finance, capital markets, commercial law, employment law, New Delhi"
+        description="Explore our comprehensive legal services across arbitration, family law, dispute resolution, criminal law, insolvency and bankruptcy, mergers and acquisitions, private equity, intellectual property, real estate, taxation, banking and finance, capital markets, commercial, employment, and pro bono matters."
+        keywords="legal services, arbitration, family law, litigation, dispute resolution, criminal law, insolvency and bankruptcy, mergers and acquisitions, private equity, intellectual property, real estate, taxation, banking and finance, capital markets, commercial law, employment law, pro bono, New Delhi"
       />
       <Header />
       <main className="flex-1">

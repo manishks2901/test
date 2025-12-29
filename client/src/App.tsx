@@ -6,10 +6,16 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { useAuth } from "@/hooks/useAuth";
 import { Scale } from "lucide-react";
+import { DisclaimerDialog } from "@/components/DisclaimerDialog";
 
 import Landing from "@/pages/Landing";
+import About from "@/pages/About";
+import Contact from "@/pages/Contact";
 import PracticeAreaDetail from "@/pages/PracticeAreaDetail";
+import Services from "@/pages/Services";
+import Team from "@/pages/Team";
 import InsightDetail from "@/pages/InsightDetail";
+import InsightsPage from "@/pages/InsightsPage";
 
 import Dashboard from "@/pages/admin/Dashboard";
 import Posts from "@/pages/admin/Posts";
@@ -46,12 +52,13 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={() => <Landing />} />
-      <Route path="/services" component={() => <Landing />} />
+      <Route path="/about" component={() => <About />} />
+      <Route path="/services" component={() => <Services />} />
       <Route path="/services/:slug" component={() => <PracticeAreaDetail />} />
-      <Route path="/team" component={() => <Landing />} />
-      <Route path="/insights" component={() => <Landing />} />
+      <Route path="/team" component={() => <Team />} />
+      <Route path="/insights" component={() => <InsightsPage />} />
       <Route path="/insights/:slug" component={() => <InsightDetail />} />
-      <Route path="/contact" component={() => <Landing />} />
+      <Route path="/contact" component={() => <Contact />} />
       
       <Route path="/admin">
         {() => <ProtectedRoute component={Dashboard} />}
@@ -92,6 +99,7 @@ function App() {
       <ThemeProvider defaultTheme="light" storageKey="wadhwa-theme">
         <TooltipProvider>
           <Toaster />
+          <DisclaimerDialog />
           <Router />
         </TooltipProvider>
       </ThemeProvider>

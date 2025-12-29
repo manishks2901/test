@@ -1,42 +1,30 @@
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { Menu, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { useAuth } from "@/hooks/useAuth";
 
 const navLinks = [
-  { href: "#home", label: "Home", id: "home" },
-  { href: "#services", label: "Practice Areas", id: "services" },
-  { href: "#team", label: "Our Team", id: "team" },
-  { href: "#insights", label: "Insights", id: "insights" },
-  { href: "#contact", label: "Contact", id: "contact" },
+  { href: "/", label: "Home" },
+  { href: "/about", label: "About Us" },
+  { href: "/services", label: "Practice Areas" },
+  { href: "/team", label: "Our Team" },
+  { href: "/insights", label: "Insights" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState<string>("home");
-  const { isAuthenticated, user } = useAuth();
+  const [location] = useLocation();
+  const { isAuthenticated } = useAuth();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPos = window.scrollY + 160;
-      let current = "home";
-
-      navLinks.forEach((link) => {
-        const el = document.getElementById(link.id);
-        if (el && scrollPos >= el.offsetTop) {
-          current = link.id;
-        }
-      });
-
-      setActiveSection(current);
-    };
-
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const isActive = (href: string) => {
+    if (href === "/") {
+      return location === "/";
+    }
+    return location === href || location.startsWith(`${href}/`);
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -61,11 +49,11 @@ export function Header() {
 
           <nav className="hidden lg:flex items-center gap-1">
             {navLinks.map((link) => (
-              <a key={link.href} href={link.href}>
+              <Link key={link.href} href={link.href}>
                 <Button
                   variant="ghost"
                   className={`font-sans text-sm ${
-                    activeSection === link.id
+                    isActive(link.href)
                       ? "text-gold"
                       : "text-foreground/80 hover:text-gold"
                   }`}
@@ -73,7 +61,7 @@ export function Header() {
                 >
                   {link.label}
                 </Button>
-              </a>
+              </Link>
             ))}
           </nav>
 
@@ -121,11 +109,11 @@ export function Header() {
           <div className="lg:hidden border-t border-border py-4 animate-fade-in">
             <nav className="flex flex-col gap-1">
               {navLinks.map((link) => (
-                <a key={link.href} href={link.href}>
+                <Link key={link.href} href={link.href}>
                   <Button
                     variant="ghost"
                     className={`w-full justify-start font-sans ${
-                      activeSection === link.id
+                      isActive(link.href)
                         ? "text-gold bg-accent"
                         : "text-foreground/80 hover:text-gold"
                     }`}
@@ -134,7 +122,7 @@ export function Header() {
                   >
                     {link.label}
                   </Button>
-                </a>
+                </Link>
               ))}
               
               <div className="border-t border-border mt-2 pt-2">
