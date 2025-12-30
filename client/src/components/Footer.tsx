@@ -112,6 +112,16 @@ export function Footer() {
                 </a>
               </li>
               <li className="flex items-center gap-3">
+                <Phone className="h-5 w-5 text-gold shrink-0" />
+                <a
+                  href="tel:+911141650303"
+                  className="text-sm text-primary-foreground/80 hover:text-gold transition-colors"
+                  data-testid="link-footer-phone"
+                >
+                  91-11-41650303
+                </a>
+              </li>
+              <li className="flex items-center gap-3">
                 <Mail className="h-5 w-5 text-gold shrink-0" />
                 <a
                   href="mailto:delhi@wadhwalawgroup.com"

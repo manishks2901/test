@@ -54,6 +54,14 @@ export function CTASection() {
               <span>91-11-45040303</span>
             </a>
             <a
+              href="tel:+911141650303"
+              className="flex items-center gap-2 hover:text-gold transition-colors"
+              data-testid="link-cta-phone"
+            >
+              <Phone className="h-5 w-5" />
+              <span>91-11-41650303</span>
+            </a>
+            <a
               href="mailto:delhi@wadhwalawgroup.com"
               className="flex items-center gap-2 hover:text-gold transition-colors"
               data-testid="link-cta-email"

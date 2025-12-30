@@ -60,7 +60,7 @@ const contactInfo = [
   {
     icon: Phone,
     title: "Phone",
-    details: ["91-11-45040303"],
+    details: ["91-11-45040303,91-11-41650303"],
   },
   {
     icon: Mail,
