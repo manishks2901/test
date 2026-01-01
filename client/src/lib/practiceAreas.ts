@@ -107,7 +107,7 @@ export const practiceAreas: PracticeArea[] = [
   {
     id: "commercial",
     icon: Briefcase,
-    title: "Commercial",
+    title: "Commercial Litigation",
     subtitle: "Business Operations",
     description:
       "Day-to-day commercial contracting, risk allocation, and operational compliance.",

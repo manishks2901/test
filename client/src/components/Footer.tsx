@@ -3,6 +3,7 @@ import { MapPin, Phone, Mail, Linkedin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { NewsletterSignup } from "./NewsletterSignup";
 import { practiceAreaTitles } from "@/lib/practiceAreas";
+import { officeLocations } from "@/lib/officeLocations";
 
 const quickLinks = [
   { href: "/about", label: "About Us" },
@@ -94,12 +95,25 @@ export function Footer() {
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
                 <MapPin className="h-5 w-5 text-gold shrink-0 mt-0.5" />
-                <span className="text-sm text-primary-foreground/80">
-                  New Delhi Office: C-104, Third Floor, Lajpat Nagar Part - I<br />
-                  Opposite Defence Colony Flyover, New Delhi - 110024<br />
-                  Noida Office: Tower 1-1702, Aceparkway, Sector 150, Noida - 201306<br />
-                  Chandigarh Office: Sector 18-D, Chandigarh
-                </span>
+                <div className="space-y-2 text-sm text-primary-foreground/80 leading-relaxed">
+                  {officeLocations.map((office) => (
+                    <div
+                      key={office.label}
+                      className="grid gap-1 sm:grid-cols-[auto,1fr] sm:gap-x-2"
+                    >
+                      <span className="font-medium sm:whitespace-nowrap">
+                        {office.label}:
+                      </span>
+                      <div className="space-y-0.5">
+                        {office.lines.map((line) => (
+                          <span key={`${office.label}-${line}`} className="block">
+                            {line}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="h-5 w-5 text-gold shrink-0" />

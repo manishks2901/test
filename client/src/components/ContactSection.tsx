@@ -34,6 +34,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { practiceAreaTitles } from "@/lib/practiceAreas";
+import { officeLocations } from "@/lib/officeLocations";
 
 const contactSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -50,12 +51,7 @@ const contactInfo = [
   {
     icon: MapPin,
     title: "Address",
-    details: [
-      "New Delhi Office: C-104, Third Floor, Lajpat Nagar Part - I",
-      "Opposite Defence Colony Flyover, New Delhi - 110024",
-      "Noida Office: Tower 1-1702, Aceparkway, Sector 150, Noida - 201306",
-      "Chandigarh Office: Sector 18-D, Chandigarh",
-    ],
+    offices: officeLocations,
   },
   {
     icon: Phone,
@@ -287,11 +283,33 @@ export function ContactSection() {
                     </div>
                     <div>
                       <h3 className="font-semibold text-foreground mb-2">{info.title}</h3>
-                      {info.details.map((detail, i) => (
-                        <p key={i} className="text-sm text-muted-foreground">
-                          {detail}
-                        </p>
-                      ))}
+                      {info.offices ? (
+                        <div className="space-y-2 text-sm text-muted-foreground leading-relaxed">
+                          {info.offices.map((office) => (
+                            <div
+                              key={office.label}
+                              className="grid gap-1 sm:grid-cols-[auto,1fr] sm:gap-x-2"
+                            >
+                              <span className="font-medium text-foreground/80 sm:whitespace-nowrap">
+                                {office.label}:
+                              </span>
+                              <div className="space-y-0.5">
+                                {office.lines.map((line) => (
+                                  <span key={`${office.label}-${line}`} className="block">
+                                    {line}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        info.details?.map((detail, i) => (
+                          <p key={i} className="text-sm text-muted-foreground">
+                            {detail}
+                          </p>
+                        ))
+                      )}
                     </div>
                   </div>
                 </CardContent>
