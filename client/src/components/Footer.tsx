@@ -19,19 +19,13 @@ export function Footer() {
       <div className="container mx-auto px-4 md:px-8 lg:px-12 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           <div className="space-y-6">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center">
               <img
-                src="/logo.png"
+                src="/logo-wordmark.png"
                 alt="Wadhwa & Co. logo"
-                className="h-12 w-auto"
+                className="h-auto w-[180px] sm:w-[220px] md:w-[260px]"
                 loading="lazy"
               />
-              <div>
-                <h3 className="font-serif text-xl font-bold">Wadhwa & Co.</h3>
-                <p className="text-xs uppercase tracking-[0.15em] text-primary-foreground/70">
-                  Advocates & Legal Consultants
-                </p>
-              </div>
             </div>
             <p className="text-sm text-primary-foreground/80 leading-relaxed">
               Providing bespoke legal solutions with integrity, precision, and a

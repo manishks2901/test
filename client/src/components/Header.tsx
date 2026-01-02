@@ -32,23 +32,16 @@ export function Header() {
         <div className="flex h-16 md:h-20 items-center justify-between">
           <Link
             href="/"
-            className="flex items-center gap-2"
+            className="flex items-center"
             data-testid="link-logo"
+            aria-label="Wadhwa & Co."
           >
             <img
-              src="/logo.png"
+              src="/logo-wordmark.png"
               alt="Wadhwa & Co. logo"
-              className="h-10 w-auto drop-shadow-sm sm:h-12 md:h-14"
+              className="h-auto w-[140px] drop-shadow-sm sm:w-[180px] md:w-[220px] lg:w-[260px]"
               loading="lazy"
             />
-            <div className="flex flex-col">
-              <span className="font-serif text-base font-bold tracking-tight text-primary sm:text-lg">
-                Wadhwa & Co.
-              </span>
-              <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground hidden sm:block">
-                Advocates & Legal Consultants
-              </span>
-            </div>
           </Link>
 
           <nav className="hidden lg:flex items-center gap-1">
