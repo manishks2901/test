@@ -134,88 +134,101 @@ export default function InsightDetail() {
       <Header />
       <main className="flex-1">
         <article>
-          <section className="py-16 md:py-24 bg-primary">
-            <div className="container mx-auto px-4 md:px-8 lg:px-12">
-              <div className="max-w-4xl">
-                <Link href="/insights">
-                  <Button
-                    variant="ghost"
-                    className="text-primary-foreground/70 hover:text-gold mb-6 -ml-4"
-                    data-testid="button-back"
-                  >
-                    <ArrowLeft className="mr-2 h-4 w-4" />
-                    Back to Insights
-                  </Button>
-                </Link>
+          {/* Hero Section with Featured Image Background */}
+          <section className="relative min-h-[60vh] md:min-h-[70vh] flex items-end">
+            {/* Background Image with Overlay */}
+            {post.featuredImage ? (
+              <>
+                <div
+                  className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+                  style={{ backgroundImage: `url(${post.featuredImage})` }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-black/30" />
+              </>
+            ) : (
+              <div className="absolute inset-0 bg-primary" />
+            )}
 
-                {post.category && (
-                  <Badge className="bg-gold/20 text-gold border-gold/30 mb-6">
-                    {post.category.name}
-                  </Badge>
-                )}
+            {/* Content */}
+            <div className="relative z-10 w-full pb-12 md:pb-16">
+              <div className="container mx-auto px-4 md:px-8 lg:px-12">
+                <div className="max-w-4xl">
+                  <Link href="/insights">
+                    <Button
+                      variant="ghost"
+                      className="text-white/80 hover:text-gold mb-6 -ml-4 hover:bg-white/10"
+                      data-testid="button-back"
+                    >
+                      <ArrowLeft className="mr-2 h-4 w-4" />
+                      Back to Insights
+                    </Button>
+                  </Link>
 
-                <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-primary-foreground mb-8 leading-tight">
-                  {post.title}
-                </h1>
+                  {post.category && (
+                    <Badge className="bg-gold/90 text-white border-gold mb-6 shadow-lg">
+                      {post.category.name}
+                    </Badge>
+                  )}
 
-                <div className="flex flex-wrap items-center gap-6 text-primary-foreground/70">
-                  <div className="flex items-center gap-3">
-                    <Avatar className="w-12 h-12 border-2 border-gold/30">
-                      <AvatarFallback className="bg-gold/20 text-gold">
-                        {getAuthorInitials(post)}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <p className="text-primary-foreground font-medium">
-                        {getAuthorName(post)}
-                      </p>
-                      <p className="text-sm text-primary-foreground/60">
-                        Attorney at Wadhwa & Co.
-                      </p>
+                  <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-8 leading-tight drop-shadow-lg">
+                    {post.title}
+                  </h1>
+
+                  <div className="flex flex-wrap items-center gap-6 text-white/90">
+                    <div className="flex items-center gap-3">
+                      <Avatar className="w-12 h-12 border-2 border-gold/50 shadow-lg">
+                        <AvatarFallback className="bg-gold/90 text-white">
+                          {getAuthorInitials(post)}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div>
+                        <p className="text-white font-medium drop-shadow">
+                          {getAuthorName(post)}
+                        </p>
+                        <p className="text-sm text-white/80 drop-shadow">
+                          Attorney at Wadhwa & Co.
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex items-center gap-4 text-sm">
-                    <span className="flex items-center gap-1">
-                      <Calendar className="h-4 w-4" />
-                      {formatDate(post.publishedAt)}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <Clock className="h-4 w-4" />
-                      {post.readingTime} min read
-                    </span>
+                    <div className="flex items-center gap-4 text-sm">
+                      <span className="flex items-center gap-1 drop-shadow">
+                        <Calendar className="h-4 w-4" />
+                        {formatDate(post.publishedAt)}
+                      </span>
+                      <span className="flex items-center gap-1 drop-shadow">
+                        <Clock className="h-4 w-4" />
+                        {post.readingTime} min read
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </section>
 
-          {post.featuredImage && (
-            <section className="py-8 md:py-12">
-              <div className="container mx-auto px-4 md:px-8 lg:px-12">
-                <div className="max-w-4xl mx-auto">
-                  <div className="rounded-lg overflow-hidden shadow-lg">
-                    <img
-                      src={post.featuredImage}
-                      alt={post.title}
-                      className="w-full h-auto max-h-[500px] object-cover"
-                      data-testid="img-post-featured"
-                    />
-                  </div>
-                </div>
-              </div>
-            </section>
-          )}
-
-          <section className="py-16 md:py-24">
+          <section className="py-16 md:py-24 bg-background">
             <div className="container mx-auto px-4 md:px-8 lg:px-12">
               <div className="max-w-3xl mx-auto">
                 {post.excerpt && (
-                  <p className="text-xl text-muted-foreground leading-relaxed mb-8 font-medium border-l-4 border-gold pl-6">
+                  <p className="text-xl text-muted-foreground leading-relaxed mb-12 font-medium border-l-4 border-gold pl-6 italic">
                     {post.excerpt}
                   </p>
                 )}
                 <div
-                  className="prose prose-lg dark:prose-invert max-w-none prose-headings:font-serif prose-headings:text-foreground prose-p:text-muted-foreground prose-a:text-gold hover:prose-a:text-gold/80"
+                  className="prose prose-lg dark:prose-invert max-w-none 
+                    prose-headings:font-serif prose-headings:text-foreground prose-headings:mb-4 prose-headings:mt-8
+                    prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-h4:text-xl
+                    prose-p:text-muted-foreground prose-p:leading-relaxed prose-p:mb-6
+                    prose-a:text-gold prose-a:no-underline hover:prose-a:text-gold/80 hover:prose-a:underline
+                    prose-strong:text-foreground prose-strong:font-semibold
+                    prose-ul:my-6 prose-ul:list-disc prose-ul:pl-6
+                    prose-ol:my-6 prose-ol:list-decimal prose-ol:pl-6
+                    prose-li:text-muted-foreground prose-li:mb-2
+                    prose-blockquote:border-l-4 prose-blockquote:border-gold prose-blockquote:pl-6 prose-blockquote:italic
+                    prose-code:text-gold prose-code:bg-muted prose-code:px-1 prose-code:rounded
+                    prose-pre:bg-muted prose-pre:p-4 prose-pre:rounded-lg
+                    prose-img:rounded-lg prose-img:shadow-lg
+                    whitespace-pre-wrap break-words"
                   dangerouslySetInnerHTML={{ __html: post.content }}
                 />
               </div>
