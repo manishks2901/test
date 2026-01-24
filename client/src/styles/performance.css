@@ -6,11 +6,11 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* GPU acceleration for transforms and opacity */
+/* GPU acceleration for transforms and opacity - exclude dialogs */
 .sidebar,
 .admin-content,
 [data-sidebar],
-[role="navigation"] {
+[role="navigation"]:not([role="dialog"]) {
   will-change: transform;
   transform: translateZ(0);
   backface-visibility: hidden;
@@ -22,7 +22,7 @@
     transition-duration: 0.15s !important;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
   }
-  
+
   /* Faster page transitions */
   [data-radix-collection-item],
   button,
@@ -33,6 +33,7 @@
 
 /* Reduce motion for users who prefer it */
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
@@ -70,9 +71,8 @@ ol {
   contain: layout style paint;
 }
 
-/* Hardware acceleration for modals and overlays */
-[role="dialog"],
-[data-state="open"] {
+/* Hardware acceleration for overlays only (not dialogs to preserve centering) */
+[data-state="open"]:not([role="dialog"]) {
   will-change: transform, opacity;
   transform: translateZ(0);
 }
