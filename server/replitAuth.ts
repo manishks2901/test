@@ -102,11 +102,11 @@ export async function setupAuth(app: Express) {
           console.error("Local login failed:", err);
           return res.status(500).json({ message: "Login failed" });
         }
-        res.redirect("/");
+        res.redirect("/admin");
       });
     });
 
-    app.get("/api/callback", (_req, res) => res.redirect("/"));
+    app.get("/api/callback", (_req, res) => res.redirect("/admin"));
 
     app.get("/api/logout", (req, res) => {
       req.logout(() => res.redirect("/"));
@@ -160,7 +160,7 @@ export async function setupAuth(app: Express) {
   app.get("/api/callback", (req, res, next) => {
     ensureStrategy(req.hostname);
     passport.authenticate(`replitauth:${req.hostname}`, {
-      successReturnToOrRedirect: "/",
+      successReturnToOrRedirect: "/admin",
       failureRedirect: "/api/login",
     })(req, res, next);
   });
