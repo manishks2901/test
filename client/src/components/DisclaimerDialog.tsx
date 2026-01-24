@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Dialog,
   DialogContent,
@@ -11,8 +11,24 @@ import {
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 
+const DISCLAIMER_KEY = "wadhwa-disclaimer-accepted";
+
 export function DisclaimerDialog() {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    // Check if user has already accepted the disclaimer
+    const hasAccepted = localStorage.getItem(DISCLAIMER_KEY);
+    if (!hasAccepted) {
+      setOpen(true);
+    }
+  }, []);
+
+  const handleAccept = () => {
+    // Save acceptance to localStorage
+    localStorage.setItem(DISCLAIMER_KEY, "true");
+    setOpen(false);
+  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -47,7 +63,7 @@ export function DisclaimerDialog() {
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="gap-2">
-          <Button onClick={() => setOpen(false)}>AGREE</Button>
+          <Button onClick={handleAccept}>AGREE</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
