@@ -1,0 +1,23 @@
+# Netlify Build Configuration
+[build]
+  command = "npm run build"
+  publish = "dist/public"
+  
+[build.environment]
+  NODE_VERSION = "20.16.11"
+  # CI=false ensures devDependencies are installed (needed for tsx, vite, esbuild)
+  CI = "false"
+
+# Redirect all requests to index.html for client-side routing
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  
+# IMPORTANT: This configuration only deploys the FRONTEND static files.
+# The Express backend needs to be deployed separately to a platform like:
+# - Railway: https://railway.app
+# - Render: https://render.com  
+# - DigitalOcean App Platform
+# - Fly.io
+
