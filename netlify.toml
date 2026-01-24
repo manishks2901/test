@@ -4,7 +4,7 @@
   publish = "dist/public"
   
 [build.environment]
-  NODE_VERSION = "20.16.11"
+  NODE_VERSION = "20"
   # CI=false ensures devDependencies are installed (needed for tsx, vite, esbuild)
   CI = "false"
 
