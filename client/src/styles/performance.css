@@ -1,0 +1,78 @@
+/* Performance Optimizations */
+
+/* Smooth transitions for all interactive elements */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* GPU acceleration for transforms and opacity */
+.sidebar,
+.admin-content,
+[data-sidebar],
+[role="navigation"] {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Optimize animations */
+@media (prefers-reduced-motion: no-preference) {
+  * {
+    transition-duration: 0.15s !important;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+  }
+  
+  /* Faster page transitions */
+  [data-radix-collection-item],
+  button,
+  a {
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Optimize scrolling */
+.overflow-auto,
+.overflow-y-auto,
+.overflow-x-auto {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+/* Prevent layout shifts */
+img,
+video,
+iframe {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Optimize table rendering */
+table {
+  table-layout: fixed;
+}
+
+/* Optimize list rendering */
+ul,
+ol {
+  contain: layout style paint;
+}
+
+/* Hardware acceleration for modals and overlays */
+[role="dialog"],
+[data-state="open"] {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}

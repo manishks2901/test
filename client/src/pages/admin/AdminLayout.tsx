@@ -1,4 +1,5 @@
 import { Link, useLocation } from "wouter";
+import { memo } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import {
   Sidebar,
@@ -72,7 +73,7 @@ interface AdminLayoutProps {
   children: React.ReactNode;
 }
 
-export function AdminLayout({ children }: AdminLayoutProps) {
+export const AdminLayout = memo(function AdminLayout({ children }: AdminLayoutProps) {
   const { user } = useAuth();
   const [location] = useLocation();
 
@@ -187,4 +188,4 @@ export function AdminLayout({ children }: AdminLayoutProps) {
       </div>
     </SidebarProvider>
   );
-}
+});
