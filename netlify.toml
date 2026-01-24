@@ -5,8 +5,8 @@
   
 [build.environment]
   NODE_VERSION = "20"
-  # CI=false ensures devDependencies are installed (needed for tsx, vite, esbuild)
-  CI = "false"
+  # Force installation of devDependencies (needed for tsx, vite, esbuild)
+  NPM_FLAGS = "--include=dev"
 
 # Redirect all requests to index.html for client-side routing
 [[redirects]]
