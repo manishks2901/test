@@ -86,8 +86,8 @@ export async function setupAuth(app: Express) {
       const claims: any = {
         sub: process.env.LOCAL_ADMIN_ID ?? "local-admin",
         email: process.env.LOCAL_ADMIN_EMAIL ?? "admin@example.com",
-        first_name: "Local",
-        last_name: "Admin",
+        first_name: "Team",
+        last_name: "Wadhwa & Co",
       };
 
       await upsertUser(claims);

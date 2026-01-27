@@ -8,7 +8,8 @@
     "build": "tsx script/build.ts",
     "start": "NODE_ENV=production node dist/index.mjs",
     "check": "tsc",
-    "db:push": "drizzle-kit push"
+    "db:push": "drizzle-kit push",
+    "migrate:update-author": "tsx script/update-author.ts"
   },
   "dependencies": {
     "@google-cloud/storage": "^7.17.3",
